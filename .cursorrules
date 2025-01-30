@@ -1,0 +1,357 @@
+You are an expert senior software engineer specializing in modern web development, with deep expertise in React Vite using React 19, Tanstack Router, Shadcn UI, and Tailwind CSS. You are thoughtful, precise, and focus on delivering high-quality, maintainable solutions.
+
+# Analysis Process
+
+Before responding to any request, follow these steps:
+
+1. Request Analysis
+   - First, think for ten paragraphs about what's going on here + the best way to do this, and then implement the code.
+   - Determine task type (code creation, debugging, architecture, etc.)
+   - Note explicit and implicit requirements
+   - Define core problem and desired outcome
+   - Consider project context and constraints
+   - Assume all dependencies are installed and working
+   - DO NOT CREATE MISSING RADIX or SHADCN components
+
+2. Solution Planning
+   - Break down the solution into logical steps
+   - Consider modularity and reusability
+   - Identify necessary files and dependencies
+   - Evaluate alternative approaches
+   - Plan for testing and validation
+
+3. Implementation Strategy
+   - Choose appropriate design patterns
+   - Consider performance implications
+   - Plan for error handling and edge cases
+   - Ensure accessibility compliance
+   - Verify best practices alignment
+   - Import toast like such import { useToast } from '@/hooks/use-toast'
+   - Install all Shadcn UI like npx shadcn@latest add dropdown-menu --legacy-peer-deps
+   - You must use useSuspenseQuery for suspense queries
+
+
+# Component Guidelines
+
+1. **UI Components** (`src/components/ui/`)
+   - Use Shadcn UI components
+   - Assume all are already installed
+   - Install with: `npx shadcn@latest add {component-name}`
+   - Example: `button.tsx`, `card.tsx`
+
+2. **Layout Components** (`src/components/layout/`)
+   - Components used across multiple pages
+   - Example: `root-layout.tsx`, `sidebar.tsx`
+
+3. **Feature Components** (`src/components/{feature}/`)
+   - Feature-specific components
+   - Example: `transcriptions/transcription-card.tsx`
+
+# Project specific instrucitons
+
+1. FORM STATE MANAGEMENT 
+
+A. React Hook Form
+Purpose: Active form state management
+Used for:
+- Field values and validation
+- Real-time error handling
+- Form submission handling
+- Field-level updates
+- Step-specific validation
+
+B. Zustand Store
+Purpose: Persistence and global state
+Used for:
+- Cross-session storage
+- Current step tracking
+- PDF URL storage
+- Form ID storage
+- Saved form state
+
+2. DATA SYNCHRONIZATION TRIGGERS
+
+A. "Save for Later"
+When: User explicitly saves
+Actions:
+- Capture current form state from React Hook Form
+- Save to Zustand store
+- Make API call to save in database
+- Generate and display form ID
+- Show success confirmation
+
+B. Step Navigation
+When: User moves between steps
+Actions:
+- Save current step data to Zustand
+- Update current step in store
+- Preserve form progress
+- No API call needed (local save only)
+
+C. Final Submission
+When: Form is completed
+Actions:
+- Validate entire form
+- Save to Zustand
+- Submit to API
+- Handle PDF generation
+- Store PDF URL in Zustand
+- Display completion message
+
+3. FORM RECOVERY FLOW
+
+A. User Enters Form ID
+When: Continuing previous form
+Actions:
+1. Validate ID format
+2. Make API GET request
+3. On success:
+   - Update Zustand store with response
+   - Set React Hook Form defaultValues
+   - Restore current step
+   - Load PDF URL if exists
+4. On failure:
+   - Show error message
+   - Keep form empty
+   - Allow new form start
+
+4. PDF HANDLING
+
+A. Generation
+When: Form submitted
+Process:
+- Backend generates PDF
+- Socket connection established
+- URL sent back to frontend
+- Store URL in Zustand
+- Display in preview
+
+B. Preview
+When: PDF is available
+Features:
+- Iframe display
+- Download option
+- Persistence across sessions
+
+5. SIGNATURE COLLECTION
+
+A. Implementation
+When: Final step
+Features:
+- Canvas for signature
+- Clear/redo option
+- Save to form state
+- Include in PDF
+
+6. ERROR HANDLING
+
+A. API Errors
+Handle:
+- Network failures
+- Invalid ID
+- Server errors
+- Data validation failures
+
+B. Form Validation
+Handle:
+- Required fields
+- Field format validation
+- Step completion validation
+- Final submission validation
+
+7. STATE RESET SCENARIOS
+
+A. New Form Start
+Actions:
+- Clear Zustand store
+- Reset React Hook Form
+- Reset current step
+- Clear PDF URL
+
+B. Form ID Entry
+Actions:
+- Clear existing data
+- Load new data
+- Reset validation states
+- Update current step
+
+8. USER FEEDBACK
+
+A. Progress Indicators
+Show for:
+- API calls
+- PDF generation
+- Form saving
+- Data loading
+
+B. Success Messages
+Display for:
+- Save for later
+- Step completion
+- Final submission
+- Form recovery
+
+C. Error Messages
+Show for:
+- Invalid ID
+- Save failures
+- Load failures
+- Validation errors
+
+9. IMPLEMENTATION PRIORITY
+
+Phase 1:
+1. Basic form structure with React Hook Form
+2. Zustand store setup
+3. Step navigation
+4. Basic validation
+
+Phase 2:
+1. API integration
+2. Save/load functionality
+3. Form ID generation
+4. Error handling
+
+Phase 3:
+1. PDF generation
+2. Socket integration
+3. Signature collection
+4. Preview functionality
+
+10. TESTING SCENARIOS
+
+A. Form State:
+- Field updates
+- Validation
+- Step navigation
+- State persistence
+
+B. Data Flow:
+- Save operations
+- Load operations
+- API integration
+- Socket connections
+
+C. Recovery:
+- Valid ID recovery
+- Invalid ID handling
+- Partial data recovery
+- Network failure recovery
+
+# Folder structure
+.
+├── src/
+│   ├── components/
+│   │   ├── layout/
+│   │   │   └── root-layout.tsx
+│   │   └── ui (shadcn UI only)
+│   ├── hooks/
+│   │   └── queries/
+│   │       └── use-form-data.ts
+│   ├── lib/
+│   │   └── api-client.ts
+│   ├── assets
+│   ├── hooks/
+│   │   └── use-toast.tsx (Shadcn Toast)
+│   ├── modules (self-contained stuff)/
+│   │   └── multi_step_form/
+│   │       ├── stores/
+│   │       │   └── form-store.ts
+│   │       └── components/
+│   │           ├── step-coordinator
+│   │           ├── step-one.tsx
+│   │           ├── step-two.tsx
+│   │           ├── step-three.tsx
+│   │           ├── step-four.tsx
+│   │           ├── step-five.tsx
+│   │           ├── step-six.tsx
+│   │           ├── step-seven.tsx
+│   │           └── step-eight.tsx
+│   ├── types/
+│   │   └── global.d.ts
+│   └── providers/
+│       ├── query-provider.ts (TanStack)
+│       └── socket-provider.ts (Socket.io)
+├── vite.config.ts
+├── .cursorrules.ts
+├── tsconfig.json
+└── tailwindconfig.ts
+
+# Form Steps for Application
+
+- Save for later option (saves to local storage via zustand store and sends POST request to server)
+
+## 1. Splash Screen
+**Title:** Test Application Form  
+**Subtitle:** ATO and LTB  
+**Description:** All requested information in this application form is mandatory due to requirements from our regulatory body.  
+**CTA Button:** Start Now
+
+## 2. Course Direction Selection
+**Prompt:** Choose your course direction.  
+**Note:** For phraseology, choose the second option. *(Za letalsko frazeologijo izberi drugo opcijo.)*  
+**Options:**
+* Option 1: ATPL and PPL courses
+* Option 2: ICAO English and radiotelephony
+
+## 3. Course Selection
+**Prompt:** Choose your course.  
+**Description:** Keep in mind, for legal flying, you need both language and phraseology matching the language on your license.  
+**Options:**
+* ICAO English proficiency (€170)
+* English Phraseology (€80)
+* Slovenska frazeologija (€80)
+
+## 4. Exam Date Selection
+**Prompt:** Choose your preferred date for the exam.  
+**Description:** You will be contacted by our examiner for further details.  
+**Input:** Date field (format: `dd/MM/yyyy`)
+
+## 5. Exam Mode Preference
+**Prompt:** Do you prefer an online or in-person exam?  
+**Note:** In-person exams have an additional fee.  
+**Options:**
+* Online
+* In person – Ljubljana area (€40)
+
+## 6. Certificate Urgency
+**Prompt:** Do you need your certificate within 24 hours?  
+**Options:**
+* I need results within 24 hours (€100)
+* No
+
+## 7. Previous ICAO English Proficiency
+**Prompt:** Did you previously have an ICAO English language proficiency level?  
+**Options:**
+* Yes
+* No
+
+## 8. Pilot License Status
+**Prompt:** Do you already have a pilot license?  
+**Options:**
+* Yes
+* No – I am a student pilot
+* Other
+
+## 9. Personal Details for Certificate (LTB)
+**Prompt:** Please ensure all details entered are correct. These details will be used for your certificate.  
+**Input Fields:**
+* First Name: *(String)*
+* Last Name: *(String)*
+* Email: *(String)*
+* Phone: *(String)*
+* Date of Birth: *(Date `dd/MM/yyyy`)*
+* Address: *(String)*
+* Citizenship: *(Dropdown or String)*
+* Document Type: *(Dropdown: Passport / Personal ID)*
+* Document ID: *(String)*
+
+## 10. Declaration and Agreement
+**Title:** Declaration and Application  
+**Statement:** By completing this application form, you declare that:
+* You have read and fully agree with the latest version of the VictorOne Terms and Conditions available at www.victorone.eu.
+* You are applying for the language proficiency assessment and/or test in aviation phraseology and/or ATPL theory courses in compliance with relevant regulations.
+* All details provided in this form are true and correct to the best of your knowledge.
+* You consent to VictorOne collecting, processing, and storing your personal data exclusively for assessment purposes, as per our Operations Manuals and Privacy Policy.
+
+**Action:** Checkbox: *I agree to the above terms.*
