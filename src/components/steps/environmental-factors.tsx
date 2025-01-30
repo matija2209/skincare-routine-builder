@@ -62,8 +62,8 @@ function EnvironmentalFactorsStep({step}: {step: number}) {
 
   return (
     <Card className="border-none shadow-none">
-      <CardHeader className="text-center">
-        <CardTitle className="text-3xl font-bold">Your Environment</CardTitle>
+      <CardHeader className="text-left md:text-center">
+        <CardTitle className="text-4xl font-bold">Your Environment</CardTitle>
         <CardDescription className="text-lg max-w-2xl mx-auto">
           Select the environmental factor that affects your skin the most
         </CardDescription>

@@ -109,8 +109,8 @@ export function AgeGroup({step}: {step: number}) {
 
   return (
     <Card className="border-none shadow-none">
-      <CardHeader className="text-center">
-        <CardTitle className="text-3xl font-bold">Your Age Group</CardTitle>
+      <CardHeader className="text-left md:text-center">
+        <CardTitle className="text-4xl font-bold">Your Age Group</CardTitle>
         <CardDescription className="text-lg max-w-2xl mx-auto">
           Help us customize your perfect skincare routine based on your age group
         </CardDescription>
@@ -143,7 +143,15 @@ export function AgeGroup({step}: {step: number}) {
                           onClick={() => field.onChange(option.value)}
                         >
                           <div className="absolute top-4 right-4 z-10">
-                            <RadioGroupItem value={option.value} id={option.value} />
+                            <RadioGroupItem 
+                              value={option.value} 
+                              id={option.value} 
+                              className={`
+                                ${field.value === option.value ? 
+                                  'bg-primary text-primary-foreground' : 
+                                  'bg-transparent'}
+                              `}
+                            />
                           </div>
                           
                           {/* Image Section */}

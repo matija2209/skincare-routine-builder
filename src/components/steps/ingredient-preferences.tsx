@@ -67,6 +67,7 @@ const IngredientCard = ({ icon: Icon, label, description, checked, onCheckedChan
           : "bg-red-50 border-red-200"
         : "hover:bg-accent"
     } rounded-lg border p-4 cursor-pointer`}
+    onClick={() => onCheckedChange(!checked)}
   >
     <div className="flex items-start space-x-4">
       <div className={`p-2 rounded-full ${
@@ -77,7 +78,13 @@ const IngredientCard = ({ icon: Icon, label, description, checked, onCheckedChan
         <Icon size={24} />
       </div>
       <div className="flex-1">
-        <Label className="flex flex-col cursor-pointer">
+        <Label 
+          className="flex flex-col cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation();
+            onCheckedChange(!checked);
+          }}
+        >
           <span className="font-semibold">{label}</span>
           <span className="text-sm text-muted-foreground">{description}</span>
         </Label>
@@ -85,11 +92,12 @@ const IngredientCard = ({ icon: Icon, label, description, checked, onCheckedChan
       <Checkbox 
         checked={checked}
         onCheckedChange={onCheckedChange}
+        onClick={(e) => e.stopPropagation()}
         className={`mt-1 ${
           checked && variant === "preferred" 
-            ? "border-green-500" 
+            ? "border-green-500 bg-green-500 text-white" 
             : checked && variant === "avoid" 
-              ? "border-red-500" 
+              ? "border-red-500 bg-red-500 text-white" 
               : ""
         }`}
       />

@@ -62,8 +62,8 @@ function SkinTypeStep({step}: {step: number}) {
 
   return (
     <Card className="border-none shadow-none w-full max-w-[95%] sm:max-w-6xl mx-auto">
-      <CardHeader className="text-center p-4 sm:p-6 animate-in slide-in-from-top duration-700">
-        <CardTitle className="text-2xl sm:text-3xl font-bold">
+      <CardHeader className="text-left md:text-center p-4 sm:p-6 animate-in slide-in-from-top duration-700">
+        <CardTitle className="text-4xl font-bold">
           What's Your Skin Type?
         </CardTitle>
         <CardDescription className="text-base sm:text-lg mt-2">
@@ -82,7 +82,7 @@ function SkinTypeStep({step}: {step: number}) {
                     <RadioGroup
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      className="grid gap-3 sm:gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+                      className="grid gap-10 sm:gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
                     >
                       {skinTypes.map((type, index) => (
                         <div

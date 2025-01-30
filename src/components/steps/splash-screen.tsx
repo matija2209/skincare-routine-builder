@@ -61,7 +61,7 @@ function SplashScreen() {
   };
 
   return (
-    <Card className="border-none shadow-none">
+    <Card className="border-none shadow-none ">
               <CardTitle className="text-4xl font-serif mb-4 text-center">
                 Your Personalized Skincare Starts Here
               </CardTitle>
