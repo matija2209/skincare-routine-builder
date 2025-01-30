@@ -68,9 +68,9 @@ export function EthicalPreferences({step}: {step: number}) {
 
   return (
     <Card className="border-none shadow-none">
-      <CardHeader>
-        <CardTitle>Ethical Preferences</CardTitle>
-        <CardDescription>
+      <CardHeader className="text-left md:text-center">
+        <CardTitle className="text-4xl font-bold">Ethical Preferences</CardTitle>
+        <CardDescription className="text-lg max-w-2xl mx-auto">
           Select your ethical priorities for skincare products.
         </CardDescription>
       </CardHeader>
@@ -97,34 +97,59 @@ export function EthicalPreferences({step}: {step: number}) {
                       defaultValue={field.value?.toString()}
                       className="space-y-4"
                     >
-                      <FormItem className="flex items-center space-x-3 rounded-lg border p-4 hover:bg-accent">
-                        <FormControl>
-                          <RadioGroupItem value="true" />
-                        </FormControl>
-                        <Label className="flex flex-col cursor-pointer">
-                          <span className="font-semibold">I have specific ethical preferences</span>
-                          <span className="font-normal text-muted-foreground">
-                            Select if you want to filter products by ethical criteria
-                          </span>
-                        </Label>
-                      </FormItem>
-                      
-                      <FormItem className="flex items-center space-x-3 rounded-lg border p-4 hover:bg-accent">
-                        <FormControl>
-                          <RadioGroupItem value="false" />
-                        </FormControl>
-                        <Label className="flex flex-col cursor-pointer">
-                          <span className="font-semibold">I have no specific preferences</span>
-                          <span className="font-normal text-muted-foreground">
-                            Continue without applying ethical filters
-                          </span>
-                        </Label>
-                      </FormItem>
+                      {[
+                        {
+                          value: "true",
+                          label: "I have specific ethical preferences",
+                          description: "Select if you want to filter products by ethical criteria"
+                        },
+                        {
+                          value: "false",
+                          label: "I have no specific preferences",
+                          description: "Continue without applying ethical filters"
+                        }
+                      ].map((option) => (
+                        <div 
+                          key={option.value}
+                          className={`
+                            flex items-center space-x-3 rounded-lg border p-4 cursor-pointer
+                            transition-all duration-300 ease-in-out
+                            ${field.value?.toString() === option.value 
+                              ? 'bg-primary/5 border-primary ring-2 ring-primary' 
+                              : 'hover:bg-accent/50'}
+                          `}
+                          onClick={() => {
+                            const boolValue = option.value === 'true'
+                            field.onChange(boolValue)
+                            
+                            // Reset or clear ethical preferences based on selection
+                            if (!boolValue) {
+                              form.setValue("ethicalPreferences", undefined)
+                            }
+                          }}
+                        >
+                          <RadioGroupItem 
+                            value={option.value} 
+                            className={`
+                              ${field.value?.toString() === option.value 
+                                ? 'bg-primary text-primary-foreground' 
+                                : 'bg-transparent'}
+                            `}
+                          />
+                          <Label className="flex flex-col cursor-pointer">
+                            <span className="font-semibold">{option.label}</span>
+                            <span className="font-normal text-muted-foreground">
+                              {option.description}
+                            </span>
+                          </Label>
+                        </div>
+                      ))}
                     </RadioGroup>
                   </FormControl>
                 </FormItem>
               )}
             />
+                     {form.watch("hasPreferences") === true &&<CardTitle className="text-2xl mb-4">Select Ethical Priorities</CardTitle>}
 
             {/* Ethical Preferences Selection */}
             {form.watch("hasPreferences") === true && (
@@ -133,7 +158,6 @@ export function EthicalPreferences({step}: {step: number}) {
                 name="ethicalPreferences"
                 render={() => (
                   <FormItem>
-                    <CardTitle className="mb-4">Select Ethical Priorities</CardTitle>
                     <div className="space-y-4">
                       {ethicalPreferencesOptions.map((option) => (
                         <FormField
@@ -141,32 +165,42 @@ export function EthicalPreferences({step}: {step: number}) {
                           control={form.control}
                           name="ethicalPreferences"
                           render={({ field }) => {
+                            const isChecked = field.value?.includes(option.value as "CRUELTY_FREE" | "VEGAN" | "SUSTAINABLE_PACKAGING" | "REEF_SAFE" | "PALM_OIL_FREE")
                             return (
-                              <FormItem
+                              <div
                                 key={option.value}
-                                className="flex items-center space-x-3 rounded-lg border p-4 hover:bg-accent"
+                                className={`
+                                  flex items-center space-x-3 rounded-lg border p-4 cursor-pointer
+                                  transition-all duration-300 ease-in-out
+                                  ${isChecked 
+                                    ? 'bg-primary/5 border-primary ring-2 ring-primary' 
+                                    : 'hover:bg-accent/50'}
+                                `}
+                                onClick={() => {
+                                  return isChecked
+                                    ? field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== option.value
+                                        )
+                                      )
+                                    : field.onChange([...(field.value || []), option.value])
+                                }}
                               >
-                                <FormControl>
-                                  <Checkbox
-                                    checked={field.value?.includes(option.value as "CRUELTY_FREE" | "VEGAN" | "SUSTAINABLE_PACKAGING" | "REEF_SAFE" | "PALM_OIL_FREE")}
-                                    onCheckedChange={(checked) => {
-                                      return checked
-                                        ? field.onChange([...(field.value || []), option.value])
-                                        : field.onChange(
-                                            field.value?.filter(
-                                              (value) => value !== option.value
-                                            )
-                                          )
-                                    }}
-                                  />
-                                </FormControl>
+                                <Checkbox
+                                  checked={isChecked}
+                                  className={`
+                                    ${isChecked 
+                                      ? 'border-primary bg-primary text-primary-foreground' 
+                                      : ''}
+                                  `}
+                                />
                                 <Label className="flex flex-col cursor-pointer">
                                   <span className="font-semibold">{option.label}</span>
                                   <span className="font-normal text-muted-foreground">
                                     {option.description}
                                   </span>
                                 </Label>
-                              </FormItem>
+                              </div>
                             )
                           }}
                         />

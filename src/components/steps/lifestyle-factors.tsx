@@ -301,7 +301,7 @@ const LifestyleFactors = ({ step }: { step: number }) => {
           </CardDescription>
         </CardHeader>
   
-        <CardContent>
+          <CardContent className='p-0'>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleNext)} className="space-y-8">
               <div className="space-y-8">

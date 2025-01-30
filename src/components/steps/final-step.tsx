@@ -1,6 +1,8 @@
 import { useFormStore } from "@/lib/store"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { useFormStep } from "@/lib/hooks/use-form-step"
+import { z } from "zod"
 
 
 // Expanded mapping functions for readable labels
@@ -83,7 +85,11 @@ const mapEnumToLabel = {
 export function FinalStep({step}: {step: number}) {
   const { formData, resetForm, setCurrentStep } = useFormStore()
 
-  step
+  const {handleBack} = useFormStep({
+    currentStep: step,
+    schema: z.object({}),
+
+  })
 
   const renderValue = (key: string, value: any) => {
     // Handle array values
@@ -133,9 +139,7 @@ export function FinalStep({step}: {step: number}) {
     setCurrentStep(1)
   }
 
-  const handleEdit = () => {
-    setCurrentStep(1)
-  }
+
 
   return (
     <div className="container mx-auto max-w-2xl space-y-6 p-4">
@@ -184,10 +188,10 @@ export function FinalStep({step}: {step: number}) {
           <div className="flex justify-between space-x-4 mt-6">
             <Button 
               variant="outline" 
-              onClick={handleEdit}
+              onClick={handleBack}
               className="w-full"
             >
-              Edit Profile
+              Back
             </Button>
             <Button 
               variant="destructive" 
@@ -196,15 +200,7 @@ export function FinalStep({step}: {step: number}) {
             >
               Start Over
             </Button>
-            <Button 
-              className="w-full"
-              onClick={() => {
-                // TODO: Implement form submission logic
-                alert("Form submitted! (Placeholder)")
-              }}
-            >
-              Submit Profile
-            </Button>
+           
           </div>
         </CardContent>
       </Card>

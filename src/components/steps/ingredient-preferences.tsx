@@ -8,24 +8,11 @@ import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { 
-  Droplets, 
   Sparkles, 
-  Shield, 
-
-  Waves,
-  Heart,
-  Leaf,
-  AlertCircle,
-  XCircle,
   Ban,
-  AlertTriangle,
-  ShieldOff,
-  XOctagon,
-  Wind,
-  FlaskConical
 } from "lucide-react";
+import { avoidedIngredientsOptions, preferredIngredientsOptions } from '@/lib/lifestyle-options';
 
-// Schema remains the same
 const ingredientPreferencesSchema = z.object({
   preferredIngredients: z.array(
     z.enum([
@@ -51,7 +38,14 @@ const ingredientPreferencesSchema = z.object({
   ).optional()
 });
 
-const IngredientCard = ({ icon: Icon, label, description, checked, onCheckedChange, variant = "preferred" }:{
+const IngredientCard = ({ 
+  icon: Icon, 
+  label, 
+  description, 
+  checked, 
+  onCheckedChange, 
+  variant = "preferred" 
+}: {
   icon: React.ElementType,
   label: string,
   description: string,
@@ -66,8 +60,7 @@ const IngredientCard = ({ icon: Icon, label, description, checked, onCheckedChan
           ? "bg-green-50 border-green-200" 
           : "bg-red-50 border-red-200"
         : "hover:bg-accent"
-    } rounded-lg border p-4 cursor-pointer`}
-    onClick={() => onCheckedChange(!checked)}
+    } rounded-lg border p-4`}
   >
     <div className="flex items-start space-x-4">
       <div className={`p-2 rounded-full ${
@@ -78,13 +71,7 @@ const IngredientCard = ({ icon: Icon, label, description, checked, onCheckedChan
         <Icon size={24} />
       </div>
       <div className="flex-1">
-        <Label 
-          className="flex flex-col cursor-pointer"
-          onClick={(e) => {
-            e.stopPropagation();
-            onCheckedChange(!checked);
-          }}
-        >
+        <Label className="flex flex-col cursor-pointer" onClick={() => onCheckedChange(!checked)}>
           <span className="font-semibold">{label}</span>
           <span className="text-sm text-muted-foreground">{description}</span>
         </Label>
@@ -92,7 +79,6 @@ const IngredientCard = ({ icon: Icon, label, description, checked, onCheckedChan
       <Checkbox 
         checked={checked}
         onCheckedChange={onCheckedChange}
-        onClick={(e) => e.stopPropagation()}
         className={`mt-1 ${
           checked && variant === "preferred" 
             ? "border-green-500 bg-green-500 text-white" 
@@ -111,96 +97,6 @@ export function IngredientPreferences({step}: {step: number}) {
     currentStep: step,
   });
 
-  const preferredIngredientsOptions = [
-    { 
-      value: "HYALURONIC_ACID",
-      label: "Hyaluronic Acid",
-      description: "Intense hydration and moisture retention",
-      icon: Droplets
-    },
-    { 
-      value: "VITAMIN_C",
-      label: "Vitamin C",
-      description: "Brightening and antioxidant protection",
-      icon: Sparkles
-    },
-    { 
-      value: "NIACINAMIDE",
-      label: "Niacinamide",
-      description: "Pore refinement and oil control",
-      icon: Shield
-    },
-    { 
-      value: "CERAMIDES",
-      label: "Ceramides",
-      description: "Skin barrier repair and protection",
-      icon: FlaskConical
-    },
-    { 
-      value: "PEPTIDES",
-      label: "Peptides",
-      description: "Collagen production and anti-aging",
-      icon: Waves
-    },
-    { 
-      value: "PANTHENOL",
-      label: "Panthenol",
-      description: "Soothing and hydrating properties",
-      icon: Heart
-    },
-    { 
-      value: "CENTELLA_ASIATICA",
-      label: "Centella Asiatica",
-      description: "Healing and calming skin inflammation",
-      icon: Leaf
-    }
-  ];
-
-  const avoidedIngredientsOptions = [
-    { 
-      value: "FRAGRANCE",
-      label: "Fragrance",
-      description: "Potential irritant and allergen",
-      icon: AlertCircle
-    },
-    { 
-      value: "ALCOHOL",
-      label: "Alcohol",
-      description: "Can be drying and irritating",
-      icon: XCircle
-    },
-    { 
-      value: "SULFATES",
-      label: "Sulfates",
-      description: "Harsh cleansing agents",
-      icon: Ban
-    },
-    { 
-      value: "PARABENS",
-      label: "Parabens",
-      description: "Controversial preservatives",
-      icon: AlertTriangle
-    },
-    { 
-      value: "SILICONES",
-      label: "Silicones",
-      description: "Can clog pores and prevent absorption",
-      icon: ShieldOff
-    },
-    { 
-      value: "MINERAL_OIL",
-      label: "Mineral Oil",
-      description: "Potentially pore-clogging",
-      icon: XOctagon
-    },
-    { 
-      value: "ESSENTIAL_OILS",
-      label: "Essential Oils",
-      description: "Can cause skin sensitivity",
-      icon: Wind
-    }
-  ];
-
   return (
     <Card className="border-none shadow-none">
       <CardHeader>
@@ -209,7 +105,7 @@ export function IngredientPreferences({step}: {step: number}) {
           Select ingredients you prefer or want to avoid in your skincare products.
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0 md:p-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleNext)} className="space-y-8">
             {/* Preferred Ingredients Section */}
@@ -236,13 +132,11 @@ export function IngredientPreferences({step}: {step: number}) {
                               description={option.description}
                               checked={field.value?.includes(option.value as "HYALURONIC_ACID" | "VITAMIN_C" | "NIACINAMIDE" | "CERAMIDES" | "PEPTIDES" | "PANTHENOL" | "CENTELLA_ASIATICA")}
                               onCheckedChange={(checked: boolean) => {
-                                return checked
-                                  ? field.onChange([...(field.value || []), option.value])
-                                  : field.onChange(
-                                      field.value?.filter(
-                                        (value) => value !== option.value
-                                      )
-                                    )
+                                const currentValue = field.value || [];
+                                const newValue = checked
+                                  ? [...currentValue, option.value]
+                                  : currentValue.filter(value => value !== option.value);
+                                field.onChange(newValue);
                               }}
                               variant="preferred"
                             />
@@ -282,13 +176,11 @@ export function IngredientPreferences({step}: {step: number}) {
                               description={option.description}
                               checked={field.value?.includes(option.value as "FRAGRANCE" | "ALCOHOL" | "SULFATES" | "PARABENS" | "SILICONES" | "MINERAL_OIL" | "ESSENTIAL_OILS")}
                               onCheckedChange={(checked: boolean) => {
-                                return checked
-                                  ? field.onChange([...(field.value || []), option.value])
-                                  : field.onChange(
-                                      field.value?.filter(
-                                        (value) => value !== option.value
-                                      )
-                                    )
+                                const currentValue = field.value || [];
+                                const newValue = checked
+                                  ? [...currentValue, option.value]
+                                  : currentValue.filter(value => value !== option.value);
+                                field.onChange(newValue);
                               }}
                               variant="avoid"
                             />

@@ -1,8 +1,25 @@
 
-import {  Moon } from 'lucide-react';
+import {  FlaskConical, Brush, Moon, Apple, Circle, Clock, X, Palette } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import { 
+  Droplets, 
+  Sparkles, 
+  Shield, 
+
+  Waves,
+  Heart,
+  Leaf,
+  AlertCircle,
+  XCircle,
+  Ban,
+  AlertTriangle,
+  ShieldOff,
+  XOctagon,
+  Wind,
+
+} from "lucide-react";
 
 
 // Add these SVG components at the top level
@@ -330,17 +347,247 @@ const lifestyleFactors = {
   }
 };
 
+const exfoliationFrequencyOptions = [
+  { 
+    value: "NEVER", 
+    label: "Never", 
+    description: "No current exfoliation routine",
+    icon: Circle,
+    details: "Best for extremely sensitive skin or those new to skincare routines"
+  },
+  { 
+    value: "WEEKLY", 
+    label: "Weekly", 
+    description: "Occasional gentle exfoliation",
+    icon: Circle,
+    details: "Ideal for sensitive or normal skin types seeking balanced maintenance"
+  },
+  { 
+    value: "TWO_TO_THREE_TIMES_WEEK", 
+    label: "2-3 times a week", 
+    description: "Regular exfoliation routine",
+    icon: Circle,
+    details: "Perfect for oily or combination skin types requiring frequent cell turnover"
+  }
+];
+
+const exfoliationTypeOptions = [
+  { 
+    value: "PHYSICAL_SCRUBS", 
+    label: "Physical Scrubs", 
+    description: "Mechanical exfoliation with granular particles",
+    icon: Brush,
+    details: "Best for: Oily skin, thick skin texture. Use with gentle pressure in circular motions.",
+    gradient: "from-blue-50 to-blue-100"
+  },
+  { 
+    value: "CHEMICAL_EXFOLIANTS", 
+    label: "Chemical Exfoliants (AHAs/BHAs)", 
+    description: "Acid-based exfoliation for deeper skin renewal",
+    icon: FlaskConical,
+    details: "Best for: Aging concerns, hyperpigmentation. Start with lower concentrations.",
+    gradient: "from-purple-50 to-purple-100"
+  },
+  { 
+    value: "ENZYME_EXFOLIATORS", 
+    label: "Enzyme Exfoliators", 
+    description: "Gentle protein-based exfoliation",
+    icon: Apple,
+    details: "Best for: Sensitive skin, rosacea-prone. Natural option derived from fruits.",
+    gradient: "from-green-50 to-green-100"
+  }
+];
+
+
+const preferredIngredientsOptions = [
+  { 
+    value: "HYALURONIC_ACID",
+    label: "Hyaluronic Acid",
+    description: "Intense hydration and moisture retention",
+    icon: Droplets
+  },
+  { 
+    value: "VITAMIN_C",
+    label: "Vitamin C",
+    description: "Brightening and antioxidant protection",
+    icon: Sparkles
+  },
+  { 
+    value: "NIACINAMIDE",
+    label: "Niacinamide",
+    description: "Pore refinement and oil control",
+    icon: Shield
+  },
+  { 
+    value: "CERAMIDES",
+    label: "Ceramides",
+    description: "Skin barrier repair and protection",
+    icon: FlaskConical
+  },
+  { 
+    value: "PEPTIDES",
+    label: "Peptides",
+    description: "Collagen production and anti-aging",
+    icon: Waves
+  },
+  { 
+    value: "PANTHENOL",
+    label: "Panthenol",
+    description: "Soothing and hydrating properties",
+    icon: Heart
+  },
+  { 
+    value: "CENTELLA_ASIATICA",
+    label: "Centella Asiatica",
+    description: "Healing and calming skin inflammation",
+    icon: Leaf
+  }
+];
+
+const avoidedIngredientsOptions = [
+  { 
+    value: "FRAGRANCE",
+    label: "Fragrance",
+    description: "Potential irritant and allergen",
+    icon: AlertCircle
+  },
+  { 
+    value: "ALCOHOL",
+    label: "Alcohol",
+    description: "Can be drying and irritating",
+    icon: XCircle
+  },
+  { 
+    value: "SULFATES",
+    label: "Sulfates",
+    description: "Harsh cleansing agents",
+    icon: Ban
+  },
+  { 
+    value: "PARABENS",
+    label: "Parabens",
+    description: "Controversial preservatives",
+    icon: AlertTriangle
+  },
+  { 
+    value: "SILICONES",
+    label: "Silicones",
+    description: "Can clog pores and prevent absorption",
+    icon: ShieldOff
+  },
+  { 
+    value: "MINERAL_OIL",
+    label: "Mineral Oil",
+    description: "Potentially pore-clogging",
+    icon: XOctagon
+  },
+  { 
+    value: "ESSENTIAL_OILS",
+    label: "Essential Oils",
+    description: "Can cause skin sensitivity",
+    icon: Wind
+  }
+];
+
+const wearsMakeupOptions = [
+  {
+    value: true,
+    label: 'Yes, I wear makeup',
+    description: 'I use makeup products regularly',
+    icon: <Palette className="w-6 h-6" />,
+    bgColor: 'bg-pink-50 hover:bg-pink-100/80'
+  },
+  {
+    value: false,
+    label: 'No, I don\'t wear makeup',
+    description: 'I rarely or never use makeup products',
+    icon: <X className="w-6 h-6" />,
+    bgColor: 'bg-gray-50 hover:bg-gray-100/80'
+  }
+];
+
+const makeupTypeOptions = [
+  { value: 'FOUNDATION', label: 'Foundation', icon: '👩' },
+  { value: 'CONCEALER', label: 'Concealer', icon: '💄' },
+  { value: 'POWDER', label: 'Powder', icon: '🧪' },
+  { value: 'BLUSH', label: 'Blush', icon: '🎨' },
+  { value: 'EYESHADOW', label: 'Eyeshadow', icon: '👁️' },
+  { value: 'MASCARA', label: 'Mascara', icon: '👀' },
+  { value: 'LIPSTICK', label: 'Lipstick', icon: '💋' },
+  { value: 'EYELINER', label: 'Eyeliner', icon: '✍️' }
+];
+
+const frequencyOptions = [
+  {
+    value: 'DAILY',
+    label: 'Daily Wear',
+    description: 'I wear makeup every day',
+    icon: <Clock className="w-6 h-6" />,
+    bgColor: 'bg-violet-50 hover:bg-violet-100/80'
+  },
+  {
+    value: 'FEW_TIMES_WEEK',
+    label: 'Few Times a Week',
+    description: '3-4 times per week',
+    icon: <Clock className="w-6 h-6" />,
+    bgColor: 'bg-violet-50 hover:bg-violet-100/80'
+  },
+  {
+    value: 'WEEKENDS_ONLY',
+    label: 'Weekends Only',
+    description: 'Mainly on weekends',
+    icon: <Clock className="w-6 h-6" />,
+    bgColor: 'bg-violet-50 hover:bg-violet-100/80'
+  },
+  {
+    value: 'SPECIAL_OCCASIONS',
+    label: 'Special Occasions',
+    description: 'Only for events or occasions',
+    icon: <Clock className="w-6 h-6" />,
+    bgColor: 'bg-violet-50 hover:bg-violet-100/80'
+  }
+];
+
+const makeupSection = {
+  wearsMakeup: {
+    title: "Makeup Usage",
+    description: "Tell us about your makeup habits to better understand your skincare needs",
+    containerClass: "bg-gradient-to-b from-pink-50/50 to-transparent p-6 rounded-lg border border-pink-100",
+    iconClass: "text-pink-500"
+  },
+  makeupTypes: {
+    title: "Types of Makeup",
+    description: "Select all the makeup products you regularly use",
+    containerClass: "bg-gradient-to-b from-purple-50/50 to-transparent p-6 rounded-lg border border-purple-100",
+    iconClass: "text-purple-500"
+  },
+  frequency: {
+    title: "Application Frequency",
+    description: "How often do you typically wear makeup?",
+    containerClass: "bg-gradient-to-b from-violet-50/50 to-transparent p-6 rounded-lg border border-violet-100",
+    iconClass: "text-violet-500"
+  }
+};
+
 
   export {
     sunExposureOptions,
     stressLevelOptions,
     sleepPatternOptions,
     lifestyleFactors,
+    exfoliationFrequencyOptions,
+    exfoliationTypeOptions,
     WaveSVG,
     SunSVG,
     FlameSVG,
     RareSunSVG,
     ModerateSunSVG,
     FrequentSunSVG,
-    SunParticles
+    SunParticles,
+    preferredIngredientsOptions,
+    avoidedIngredientsOptions,
+    makeupTypeOptions,
+    frequencyOptions,
+    wearsMakeupOptions,
+    makeupSection
   }
