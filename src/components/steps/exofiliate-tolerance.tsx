@@ -79,14 +79,7 @@ const ExfoliationTolerance = ({ step }: { step: number }) => {
     };
   }, []);
 
-  const ScrollIndicator = () => (
-    <div 
-      className="flex justify-center items-center mt-4 text-muted-foreground scroll-indicator"
-    >
-      <ChevronDown className="w-6 h-6" />
-      <span className="ml-2 text-sm">Scroll or select an option to continue</span>
-    </div>
-  );
+
 
   const handleSectionComplete = (section: keyof typeof completedSections, value: any) => {
     setCompletedSections(prev => ({
@@ -301,7 +294,6 @@ const ExfoliationTolerance = ({ step }: { step: number }) => {
                           {renderTypeOptions()}
                         </RadioGroup>
                       </FormControl>
-                      {!completedSections.exfoliationType && <ScrollIndicator />}
                       <FormMessage />
                     </FormItem>
                   )}

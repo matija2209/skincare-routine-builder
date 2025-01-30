@@ -291,16 +291,7 @@ const LifestyleFactors = ({ step }: { step: number }) => {
         ))}
       </div>
     );
-  
-    const ScrollIndicator = () => (
-      <div 
-        className="flex justify-center items-center mt-4 text-muted-foreground scroll-indicator"
-      >
-        <ChevronDown className="w-6 h-6" />
-        <span className="ml-2 text-sm">Scroll or select an option to continue</span>
-      </div>
-    );
-  
+
     return (
       <Card className="border-none shadow-none">
         <CardHeader>
@@ -377,7 +368,6 @@ const LifestyleFactors = ({ step }: { step: number }) => {
                             </p>
                           </div>
                           {renderOptionCards(stressLevelOptions, 'stressLevels')}
-                          {completedSections.sunExposure && !completedSections.stressLevels && <ScrollIndicator />}
                           <FormMessage />
                         </FormItem>
                       )}
@@ -414,7 +404,6 @@ const LifestyleFactors = ({ step }: { step: number }) => {
                             </p>
                           </div>
                           {renderOptionCards(sleepPatternOptions, 'sleepPatterns')}
-                          {completedSections.stressLevels && !completedSections.sleepPatterns && <ScrollIndicator />}
                           <FormMessage />
                         </FormItem>
                       )}
