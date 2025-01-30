@@ -1,6 +1,6 @@
 import { useFormStore } from "@/lib/store"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { useFormStep } from "@/lib/hooks/use-form-step"
 import { z } from "zod"
 
@@ -151,58 +151,19 @@ export function FinalStep({step}: {step: number}) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {renderSection("Skin Basics", {
-            skinType: formData.skinType,
-            ageGroup: formData.ageGroup,
-            climateType: formData.climateType
-          })}
+            <div className="text-sm text-muted-foreground">
+              <pre className="bg-muted p-4 rounded-lg">
+                {JSON.stringify(formData, null, 2)}
+              </pre>
 
-          {renderSection("Skin Goals", {
-            skinGoals: formData.skinGoals
-          })}
-
-          {renderSection("Lifestyle Factors", {
-            sunExposureHours: formData.sunExposureHours ,
-            stressLevel: formData.stressLevel,
-            sleepHours: formData.sleepHours
-          })}
-
-          {renderSection("Exfoliation Preferences", {
-            exfoliationFrequency: formData.exfoliationFrequency
-          })}
-
-          {renderSection("Ingredient Preferences", {
-            preferredIngredients: formData.preferredIngredients,
-            avoidedIngredients: formData.avoidedIngredients
-          })}
-
-          {renderSection("Routine Preferences", {
-            routineComplexity: formData.routineComplexity,
-            monthlyBudget: formData.monthlyBudget
-          })}
-
-          {formData.hasPreferences && renderSection("Ethical Preferences", {
-            ethicalPreferences: formData.ethicalPreferences
-          })}
-
-          <div className="flex justify-between space-x-4 mt-6">
-            <Button 
-              variant="outline" 
-              onClick={handleBack}
-              className="w-full"
-            >
-              Back
-            </Button>
-            <Button 
-              variant="destructive" 
-              onClick={handleReset}
-              className="w-full"
-            >
-              Start Over
-            </Button>
-           
-          </div>
+            </div>
         </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button back variant="outline" onClick={handleBack}>
+            Back
+          </Button>
+          <Button onClick={handleReset}>Start Over</Button>
+        </CardFooter>
       </Card>
     </div>
   )

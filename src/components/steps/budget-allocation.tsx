@@ -73,10 +73,10 @@ export function BudgetAllocation({step}: {step: number}) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <CardTitle className="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-violet-600 bg-clip-text text-transparent">
+          <CardTitle >
             Budget Allocation
           </CardTitle>
-          <CardDescription className="text-lg mt-4 max-w-2xl mx-auto">
+          <CardDescription >
             Select your monthly budget for skincare products to help us tailor recommendations.
           </CardDescription>
         </motion.div>
@@ -99,7 +99,7 @@ export function BudgetAllocation({step}: {step: number}) {
                         variants={containerVariants}
                         initial="hidden"
                         animate="show"
-                        className="space-y-4"
+                        className="grid grid-cols-1 md:grid-cols-3 gap-4"
                       >
                         {budgetOptions.map((option) => (
                           <motion.div
@@ -190,17 +190,13 @@ export function BudgetAllocation({step}: {step: number}) {
                 type="button" 
                 variant="outline" 
                 onClick={handleBack}
-                className="group"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+back              >
                 Back
               </Button>
               <Button 
                 type="submit"
-                className="group"
-              >
+front              >
                 Continue
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </motion.div>
           </form>

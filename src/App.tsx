@@ -12,11 +12,11 @@ import ExfoliationTolerance from "./components/steps/exofiliate-tolerance"
 import { IngredientPreferences } from "./components/steps/ingredient-preferences"
 import RoutineComplexity from "./components/steps/routine-complexity"
 import BudgetAllocation from "./components/steps/budget-allocation"
-import EthicalPreferences from "./components/steps/ethical-preferences"
 import MakeupQuestion from "./components/steps/makeup-question"
 import LifestyleFactors from "./components/steps/lifestyle-factors"
 import AgeGroup from "./components/steps/age-group"
 import FinalStep from "./components/steps/final-step"
+import EthicalPreferences from "./components/steps/ethical/ethical-preferences"
 
 function App() {
   const currentStep = useFormStore((state) => state.currentStep)

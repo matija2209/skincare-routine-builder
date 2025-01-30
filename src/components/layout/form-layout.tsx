@@ -24,6 +24,7 @@ export const FormLayout: React.FC<FormLayoutProps> = ({
 
   useEffect(() => {
     const latestState = getLatestState()
+    
     if (activeStep === 5) {
       setClimateType(latestState.formData.climateType)
     } else {

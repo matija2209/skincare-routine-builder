@@ -11,6 +11,8 @@ export type SkincareFormData = {
   blacklistedIngredients?: string[]
   texturePreference?: "LIGHTWEIGHT" | "RICH" | "NO_PREFERENCE"
   packagingPreference?: "ECO_REFILL" | "AIRLESS_PUMP" | "STANDARD"
+  makeupTypes?: ("FOUNDATION" | "CONCEALER" | "BLUSH" | "EYESHADOW" | "EYELINER" | "MASCARA" | "LIPSTICK" | "LIP_GLOSS" | "LIP_STAIN")[]
+  makeupFrequency?: 'DAILY' | 'FEW_TIMES_WEEK' | 'WEEKENDS_ONLY' | 'SPECIAL_OCCASIONS'
   ethicalPreferences?: ("NONE"|"CRUELTY_FREE" | "VEGAN" | "SUSTAINABLE_PACKAGING" | "REEF_SAFE" | "PALM_OIL_FREE")[]
   stressLevel?: number
   sleepHours?: number
@@ -18,7 +20,7 @@ export type SkincareFormData = {
   avoidedIngredients?: ("PARABENS" | "SILICONES" | "MINERAL_OIL" | "ESSENTIAL_OILS")[]
   routineComplexity?: "LOW" | "MEDIUM" | "HIGH"
   monthlyBudget?: number
-  hasPreferences?: boolean
+  hasPreferencesEthical?: boolean
   routineTime?: {
     morning?: number
     evening?: number

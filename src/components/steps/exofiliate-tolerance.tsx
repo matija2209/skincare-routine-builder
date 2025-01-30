@@ -223,20 +223,19 @@ const ExfoliationTolerance = ({ step }: { step: number }) => {
                 type="button" 
                 variant="outline" 
                 onClick={handleBack}
-                className="flex items-center space-x-2"
+back
               >
-                <ChevronLeft className="w-4 h-4" />
                 <span>Back</span>
               </Button>
               <Button 
                 type="submit"
+                front
                 disabled={
                   !completedSections.exfoliationFrequency || 
                   (form.getValues("exfoliationFrequency") !== "NEVER" && !completedSections.exfoliationType)
                 }
               >
                 <span>Continue</span>
-                <ChevronRight className="w-4 h-4" />
               </Button>
             </div>
           </form>

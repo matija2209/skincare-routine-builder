@@ -106,10 +106,10 @@ function SplashScreen() {
         >
           <div className="text-center space-y-4">
             <motion.div variants={itemVariants} className="flex justify-center">
-              <Crown className="w-12 h-12 text-pink-500 mb-4" />
+              <Crown className="w-12 h-12 bg-gradient-to-r from-primary to-primary/60 bg-clip-text mb-4" />
             </motion.div>
             <motion.div variants={itemVariants}>
-              <h1 className="text-3xl md:text-5xl font-serif mb-4 bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
+              <h1 className="text-3xl md:text-5xl font-serif bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
                 Discover Your Perfect Beauty Routine
               </h1>
             </motion.div>
@@ -144,7 +144,7 @@ function SplashScreen() {
                   >
                     <div className="bg-white/50 backdrop-blur-sm rounded-xl p-6 shadow-sm">
                       <div className="flex flex-col items-center text-center gap-3">
-                        <span className="text-pink-500 bg-pink-100 p-3 rounded-full">
+                        <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text bg-pink-100 p-3 rounded-full">
                           {item.icon}
                         </span>
                         <h3 className="font-medium text-gray-900">{item.title}</h3>

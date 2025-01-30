@@ -160,13 +160,13 @@ function EnvironmentalFactorsStep({step}: {step: number}) {
                 type="button" 
                 variant="outline" 
                 onClick={handleBack}
-                className="w-28"
+back
               >
                 Back
               </Button>
               <Button 
                 type="submit"
-                className="w-28"
+front
               >
                 Continue
               </Button>

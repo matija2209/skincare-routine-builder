@@ -180,14 +180,15 @@ function SkinTypeStep({step}: {step: number}) {
                 type="button" 
                 variant="outline" 
                 onClick={handleBack}
-                className="px-4 sm:px-6 text-sm sm:text-base hover:-translate-x-1 transition-transform duration-300"
+                back
               >
+
                 Back
               </Button>
               <Button 
                 type="submit"
-                className="px-6 sm:px-8 text-sm sm:text-base hover:translate-x-1 transition-transform duration-300"
                 disabled={!form.watch('skinType')}
+                front
               >
                 Continue
               </Button>

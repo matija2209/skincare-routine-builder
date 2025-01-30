@@ -417,13 +417,14 @@ const LifestyleFactors = ({ step }: { step: number }) => {
                   type="button" 
                   variant="outline" 
                   onClick={handleBack}
+                  back
                 >
                   Back
                 </Button>
                 <Button 
                   type="submit" 
                   disabled={!completedSections.sleepPatterns}
-                  className="flex items-center gap-2"
+                  front
                 >
                   Continue
                 </Button>

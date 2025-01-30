@@ -291,7 +291,7 @@ function SelectSkinGoals({step}: {step: number}) {
     <Card className="border-none shadow-none">
       <CardHeader className="text-left md:text-center">
         <CardTitle className="text-4xl font-bold">Your Skin Goals</CardTitle>
-        <CardDescription className="text-lg max-w-2xl mx-auto">
+        <CardDescription>
           Select your primary skin concern to help us create your perfect skincare routine
         </CardDescription>
       </CardHeader>
@@ -354,9 +354,8 @@ function SelectSkinGoals({step}: {step: number}) {
                 type="button" 
                 variant="outline" 
                 onClick={handleBack}
-                className="w-28"
+back
               >
-                <ChevronLeft className="mr-2 h-4 w-4" />
                 Back
               </Button>
               <Button 
@@ -365,10 +364,9 @@ function SelectSkinGoals({step}: {step: number}) {
                   !completedSections.primaryGoal || 
                   (form.getValues("primaryGoal") === "ACNE" && !completedSections.acneType)
                 }
-                className="w-28"
+                front
               >
                 Continue
-                <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </form>

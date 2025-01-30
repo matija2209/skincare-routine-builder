@@ -6,12 +6,13 @@ import { Label } from "@/components/ui/label"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Checkbox } from "@/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { motion, AnimatePresence } from "framer-motion"
 
 // Updated Ethical Preferences Schema
-const ethicalPreferencesSchema = z.discriminatedUnion("hasPreferences", [
+const ethicalPreferencesSchema = z.discriminatedUnion("hasPreferencesEthical", [
   // When specific preferences are selected
   z.object({
-    hasPreferences: z.literal(true),
+    hasPreferencesEthical: z.literal(true),
     ethicalPreferences: z.array(
       z.enum([
         "VEGAN", 
@@ -25,7 +26,7 @@ const ethicalPreferencesSchema = z.discriminatedUnion("hasPreferences", [
   
   // When no preferences are selected
   z.object({
-    hasPreferences: z.literal(false),
+    hasPreferencesEthical: z.literal(false),
     ethicalPreferences: z.undefined()
   })
 ])
@@ -42,45 +43,58 @@ export function EthicalPreferences({step}: {step: number}) {
     { 
       value: "VEGAN", 
       label: "Vegan", 
-      description: "No animal-derived ingredients" 
+      description: "No animal-derived ingredients",
+      icon: "🌱"
     },
     { 
       value: "CRUELTY_FREE", 
       label: "Cruelty-Free", 
-      description: "No animal testing" 
+      description: "No animal testing",
+      icon: "🐇"
     },
     { 
       value: "SUSTAINABLE_PACKAGING", 
       label: "Sustainable Packaging", 
-      description: "Environmentally friendly packaging" 
+      description: "Environmentally friendly packaging",
+      icon: "📦"
     },
     { 
       value: "REEF_SAFE", 
       label: "Reef Safe", 
-      description: "Environmentally conscious marine protection" 
+      description: "Environmentally conscious marine protection",
+      icon: "🐠"
     },
     { 
       value: "PALM_OIL_FREE", 
       label: "Palm Oil Free", 
-      description: "Avoiding palm oil to protect rainforests" 
+      description: "Avoiding palm oil to protect rainforests",
+      icon: "🌴"
     }
   ]
 
   return (
-    <Card className="border-none shadow-none">
-      <CardHeader className="text-left md:text-center">
-        <CardTitle className="text-4xl font-bold">Ethical Preferences</CardTitle>
-        <CardDescription className="text-lg max-w-2xl mx-auto">
-          Select your ethical priorities for skincare products.
-        </CardDescription>
+    <Card>
+      <CardHeader className="text-left md:text-center space-y-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <CardTitle className="text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+            Ethical Preferences
+          </CardTitle>
+          <CardDescription className="text-lg mt-4 text-muted-foreground">
+            Select your ethical priorities for skincare products
+          </CardDescription>
+        </motion.div>
       </CardHeader>
+      
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleNext)} className="space-y-6">
-            {/* Preferences Selection */}
+          <form onSubmit={form.handleSubmit(handleNext)} className="space-y-8">
             <FormField
               control={form.control}
-              name="hasPreferences"
+              name="hasPreferencesEthical"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -88,11 +102,7 @@ export function EthicalPreferences({step}: {step: number}) {
                       onValueChange={(value) => {
                         const boolValue = value === 'true'
                         field.onChange(boolValue)
-                        
-                        // Reset or clear ethical preferences based on selection
-                        if (!boolValue) {
-                          form.setValue("ethicalPreferences", undefined)
-                        }
+                        if (!boolValue) form.setValue("ethicalPreferences", undefined)
                       }}
                       defaultValue={field.value?.toString()}
                       className="space-y-4"
@@ -100,124 +110,178 @@ export function EthicalPreferences({step}: {step: number}) {
                       {[
                         {
                           value: "true",
-                          label: "I have specific ethical preferences",
-                          description: "Select if you want to filter products by ethical criteria"
+                          label: "I have specific preferences",
+                          description: "Filter products by ethical criteria"
                         },
                         {
                           value: "false",
-                          label: "I have no specific preferences",
-                          description: "Continue without applying ethical filters"
+                          label: "No specific preferences",
+                          description: "Continue without ethical filters"
                         }
                       ].map((option) => (
-                        <div 
+                        <motion.div
                           key={option.value}
-                          className={`
-                            flex items-center space-x-3 rounded-lg border p-4 cursor-pointer
-                            transition-all duration-300 ease-in-out
-                            ${field.value?.toString() === option.value 
-                              ? 'bg-primary/5 border-primary ring-2 ring-primary' 
-                              : 'hover:bg-accent/50'}
-                          `}
-                          onClick={() => {
-                            const boolValue = option.value === 'true'
-                            field.onChange(boolValue)
-                            
-                            // Reset or clear ethical preferences based on selection
-                            if (!boolValue) {
-                              form.setValue("ethicalPreferences", undefined)
-                            }
-                          }}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.2 * Number(option.value === "false") }}
                         >
-                          <RadioGroupItem 
-                            value={option.value} 
+                          <div 
                             className={`
-                              ${field.value?.toString() === option.value 
-                                ? 'bg-primary text-primary-foreground' 
-                                : 'bg-transparent'}
+                              group flex items-center space-x-3 rounded-xl p-6 cursor-pointer
+                              border-2 transition-all duration-300 ease-in-out
+                              ${
+                                field.value?.toString() === option.value
+                                ? 'border-primary bg-primary/10 shadow-lg'
+                                : 'border-muted hover:border-primary/30 hover:bg-accent/20'
+                              }
                             `}
-                          />
-                          <Label className="flex flex-col cursor-pointer">
-                            <span className="font-semibold">{option.label}</span>
-                            <span className="font-normal text-muted-foreground">
-                              {option.description}
-                            </span>
-                          </Label>
-                        </div>
+                            onClick={() => field.onChange(option.value === 'true')}
+                          >
+                            <div className="flex-shrink-0">
+                              <div className={`
+                                h-6 w-6 rounded-full border-2 flex items-center justify-center
+                                ${field.value?.toString() === option.value 
+                                  ? 'border-primary bg-primary text-white'
+                                  : 'border-muted-foreground group-hover:border-primary'}
+                              `}>
+                                {field.value?.toString() === option.value && (
+                                  <motion.div
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    className="w-2 h-2 bg-current rounded-full"
+                                  />
+                                )}
+                              </div>
+                            </div>
+                            <div className="space-y-1">
+                              <Label className="text-lg font-semibold cursor-pointer">
+                                {option.label}
+                              </Label>
+                              <p className="text-muted-foreground">{option.description}</p>
+                            </div>
+                          </div>
+                        </motion.div>
                       ))}
                     </RadioGroup>
                   </FormControl>
                 </FormItem>
               )}
             />
-                     {form.watch("hasPreferences") === true &&<CardTitle className="text-2xl mb-4">Select Ethical Priorities</CardTitle>}
 
-            {/* Ethical Preferences Selection */}
-            {form.watch("hasPreferences") === true && (
-              <FormField
-                control={form.control}
-                name="ethicalPreferences"
-                render={() => (
-                  <FormItem>
-                    <div className="space-y-4">
-                      {ethicalPreferencesOptions.map((option) => (
-                        <FormField
-                          key={option.value}
-                          control={form.control}
-                          name="ethicalPreferences"
-                          render={({ field }) => {
-                            const isChecked = field.value?.includes(option.value as "CRUELTY_FREE" | "VEGAN" | "SUSTAINABLE_PACKAGING" | "REEF_SAFE" | "PALM_OIL_FREE")
-                            return (
-                              <div
-                                key={option.value}
-                                className={`
-                                  flex items-center space-x-3 rounded-lg border p-4 cursor-pointer
-                                  transition-all duration-300 ease-in-out
-                                  ${isChecked 
-                                    ? 'bg-primary/5 border-primary ring-2 ring-primary' 
-                                    : 'hover:bg-accent/50'}
-                                `}
-                                onClick={() => {
-                                  return isChecked
-                                    ? field.onChange(
-                                        field.value?.filter(
-                                          (value) => value !== option.value
-                                        )
-                                      )
-                                    : field.onChange([...(field.value || []), option.value])
-                                }}
-                              >
-                                <Checkbox
-                                  checked={isChecked}
-                                  className={`
-                                    ${isChecked 
-                                      ? 'border-primary bg-primary text-primary-foreground' 
-                                      : ''}
-                                  `}
-                                />
-                                <Label className="flex flex-col cursor-pointer">
-                                  <span className="font-semibold">{option.label}</span>
-                                  <span className="font-normal text-muted-foreground">
-                                    {option.description}
-                                  </span>
-                                </Label>
-                              </div>
-                            )
-                          }}
-                        />
-                      ))}
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
+            <AnimatePresence>
+              {form.watch("hasPreferencesEthical") === true && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="space-y-6"
+                >
+                  <h3 className="text-2xl font-bold text-center mb-6">
+                    Select Your Priorities
+                  </h3>
+                  
+                  <FormField
+                    control={form.control}
+                    name="ethicalPreferences"
+                    render={() => (
+                      <FormItem>
+                        <div className="grid gap-4 md:grid-cols-2">
+                          {ethicalPreferencesOptions.map((option, index) => (
+                            <FormField
+                              key={option.value}
+                              control={form.control}
+                              name="ethicalPreferences"
+                              render={({ field }) => {
+                                const isChecked = field.value?.includes(option.value as any)
+                                return (
+                                  <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1 }}
+                                  >
+                                    <div
+                                      className={`
+                                        relative flex items-start space-x-3 rounded-xl p-4 cursor-pointer
+                                        border-2 transition-all duration-300 ease-in-out
+                                        ${
+                                          isChecked
+                                          ? 'border-primary bg-primary/10 shadow-md'
+                                          : 'border-muted hover:border-primary/30 hover:bg-accent/20'
+                                        }
+                                      `}
+                                      onClick={() => {
+                                        isChecked
+                                          ? field.onChange(field.value?.filter(v => v !== option.value))
+                                          : field.onChange([...(field.value || []), option.value])
+                                      }}
+                                    >
+                                      <div className="flex-shrink-0">
+                                        <div className={`
+                                          h-6 w-6 rounded-md border-2 flex items-center justify-center
+                                          ${isChecked 
+                                            ? 'border-primary bg-primary text-white'
+                                            : 'border-muted-foreground'}
+                                        `}>
+                                          {isChecked && (
+                                            <motion.svg
+                                              initial={{ scale: 0 }}
+                                              animate={{ scale: 1 }}
+                                              className="w-4 h-4"
+                                              viewBox="0 0 24 24"
+                                              fill="none"
+                                              stroke="currentColor"
+                                              strokeWidth="3"
+                                            >
+                                              <path d="M5 13l4 4L19 7" />
+                                            </motion.svg>
+                                          )}
+                                        </div>
+                                      </div>
+                                      <div className="space-y-1">
+                                        <Label className="flex items-center gap-2 text-lg font-medium">
+                                          <span>{option.icon}</span>
+                                          {option.label}
+                                        </Label>
+                                        <p className="text-muted-foreground text-sm">
+                                          {option.description}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </motion.div>
+                                )
+                              }}
+                            />
+                          ))}
+                        </div>
+                        <FormMessage className="text-center text-red-500 font-medium" />
+                      </FormItem>
+                    )}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            <div className="flex justify-between pt-4">
-              <Button type="button" variant="outline" onClick={handleBack}>
+            <motion.div
+              className="flex justify-between pt-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleBack}
+                className="px-8 py-4 rounded-xl text-lg font-semibold hover:scale-105 transition-transform"
+              >
                 Back
               </Button>
-              <Button type="submit">Continue</Button>
-            </div>
+              <Button
+                type="submit"
+                className="px-8 py-4 rounded-xl text-lg font-semibold bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 hover:scale-105 transition-transform"
+              >
+                Continue
+              </Button>
+            </motion.div>
           </form>
         </Form>
       </CardContent>
