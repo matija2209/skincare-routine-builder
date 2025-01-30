@@ -82,7 +82,7 @@ function SplashScreen() {
               Get tailored skincare recommendations based on your skin type, routine & goals.
             </motion.div>
 
-            <motion.div variants={itemVariants} className="grid grid-cols-2 gap-6">
+            <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 { icon: <Leaf className="w-6 h-6" />, text: "Understand your skin needs better" },
                 { icon: <Droplet className="w-6 h-6" />, text: "Balance your skincare routine effectively" },
