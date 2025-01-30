@@ -4,11 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Form, FormField, FormItem, FormControl, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { useFormStep } from '@/lib/hooks/use-form-step';
-import {  ChevronRight, ChevronLeft } from 'lucide-react';
 import { z } from 'zod';
 import { AnimatePresence, motion } from 'framer-motion';
 import { frequencyOptions, makeupTypeOptions, wearsMakeupOptions } from '@/lib/lifestyle-options';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { RadioGroup } from '@/components/ui/radio-group';
 import { cn } from '@/lib/utils';
 
 const makeupQuestionSchema = z.object({
@@ -160,6 +159,7 @@ const MakeupQuestion = ({ step }: { step: number }) => {
                             variants={itemVariants}
                             whileHover={{ scale: 1.02 }}
                             className="relative"
+                            onClick={() => handleSectionComplete('wearsMakeup', option.value)}
                           >
                             <div 
                               className={cn(
@@ -185,21 +185,28 @@ const MakeupQuestion = ({ step }: { step: number }) => {
                                 </motion.div>
 
                                 <div className="flex-1">
-                                  <Label className="text-lg font-medium">{option.label}</Label>
+                                  <Label className="text-lg font-medium cursor-pointer">{option.label}</Label>
                                   <p className="text-sm text-muted-foreground mt-1">
                                     {option.description}
                                   </p>
                                 </div>
 
-                                <RadioGroupItem 
-                                  value={String(option.value)}
+                                <div 
                                   className={cn(
-                                    "w-6 h-6 border-2",
+                                    "w-6 h-6 rounded-full border-2 flex items-center justify-center",
                                     field.value === option.value 
                                       ? "border-white bg-primary/20"
                                       : "border-muted-foreground/30"
                                   )}
-                                />
+                                >
+                                  {field.value === option.value && (
+                                    <motion.div
+                                      initial={{ scale: 0 }}
+                                      animate={{ scale: 1 }}
+                                      className="w-2 h-2 bg-white rounded-full"
+                                    />
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </motion.div>
@@ -300,6 +307,7 @@ const MakeupQuestion = ({ step }: { step: number }) => {
                                   variants={itemVariants}
                                   whileHover={{ scale: 1.02 }}
                                   className="relative"
+                                  onClick={() => handleSectionComplete('makeupFrequency', option.value)}
                                 >
                                   <div 
                                     className={cn(
@@ -325,21 +333,28 @@ const MakeupQuestion = ({ step }: { step: number }) => {
                                       </motion.div>
 
                                       <div className="flex-1">
-                                        <Label className="text-lg font-medium">{option.label}</Label>
+                                        <Label className="text-lg font-medium cursor-pointer">{option.label}</Label>
                                         <p className="text-sm text-muted-foreground mt-1">
                                           {option.description}
                                         </p>
                                       </div>
 
-                                      <RadioGroupItem 
-                                        value={option.value}
+                                      <div 
                                         className={cn(
-                                          "w-6 h-6 border-2",
+                                          "w-6 h-6 rounded-full border-2 flex items-center justify-center",
                                           field.value === option.value 
                                             ? "border-white bg-primary/20"
                                             : "border-muted-foreground/30"
                                         )}
-                                      />
+                                      >
+                                        {field.value === option.value && (
+                                          <motion.div
+                                            initial={{ scale: 0 }}
+                                            animate={{ scale: 1 }}
+                                            className="w-2 h-2 bg-white rounded-full"
+                                          />
+                                        )}
+                                      </div>
                                     </div>
                                   </div>
                                 </motion.div>

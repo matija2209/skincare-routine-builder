@@ -7,8 +7,6 @@ import { Label } from "@/components/ui/label";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { 
-  ChevronRight, 
-  ChevronLeft,
   AlertCircle,
 } from "lucide-react";
 import { z } from "zod";

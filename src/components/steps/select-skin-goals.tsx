@@ -6,9 +6,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { AlertCircle, ChevronRight, ChevronLeft } from 'lucide-react'
-import { motion } from 'framer-motion';
+import { AlertCircle } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { skinGoalOptions } from '@/lib/lifestyle-options';
 
 const skinGoalsSchema = z.discriminatedUnion("primaryGoal", [
   z.object({
@@ -100,9 +101,12 @@ function SelectSkinGoals({step}: {step: number}) {
       defaultValue={form.getValues("primaryGoal")}
       className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
     >
-      {skinGoalOptions.map((option) => (
+      {skinGoalOptions.map((option, index) => (
         <motion.div
           key={option.value}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: index * 0.1 }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
@@ -111,7 +115,7 @@ function SelectSkinGoals({step}: {step: number}) {
               "relative rounded-xl border p-6 transition-all duration-300 ease-in-out cursor-pointer",
               form.getValues("primaryGoal") === option.value 
                 ? "bg-primary/5 border-primary shadow-md ring-2 ring-primary" 
-                : "hover:bg-accent/50 hover:scale-[1.02]"
+                : "hover:bg-accent/50"
             )}
             onClick={() => handleSectionComplete('primaryGoal', option.value)}
           >
@@ -161,39 +165,41 @@ function SelectSkinGoals({step}: {step: number}) {
         }));
       }}
       defaultValue={form.getValues("acneType")}
-      className="grid grid-cols-1 md:grid-cols-3 gap-4"
+      className="grid gap-4 md:grid-cols-3"
     >
       {[
         { 
           value: "HORMONAL", 
           label: "Hormonal Acne", 
-          description: "Typically appears along jawline and chin",
+          description: "Typically appears along jawline and chin, often cyclical with hormonal changes",
           icon: "🌙"
         },
         { 
           value: "STRESS_RELATED", 
           label: "Stress-Related", 
-          description: "Flares up during periods of high stress",
+          description: "Flares up during periods of high stress, often accompanied by inflammation",
           icon: "😮‍💨"
         },
         { 
           value: "CONGESTION", 
           label: "Congestion", 
-          description: "Small bumps and blackheads",
+          description: "Small bumps, blackheads, and clogged pores due to excess oil and debris",
           icon: "🔍"
         }
-      ].map((option) => (
+      ].map((option, index) => (
         <motion.div
           key={option.value}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: index * 0.1 }}
         >
-          <div 
+          <div
             className={cn(
-              "relative rounded-xl border p-4 transition-all duration-300 ease-in-out cursor-pointer",
-              form.getValues("acneType") === option.value 
-                ? "bg-primary/5 border-primary shadow-sm ring-2 ring-primary" 
-                : "hover:bg-accent/50 hover:scale-[1.02]"
+              "group flex items-start space-x-4 rounded-xl p-6 cursor-pointer",
+              "border-2 transition-all duration-300 ease-in-out",
+              form.getValues("acneType") === option.value
+                ? "border-primary bg-primary/10 shadow-lg"
+                : "border-muted hover:border-primary/30 hover:bg-accent/20"
             )}
             onClick={() => {
               form.setValue("acneType", option.value as "HORMONAL" | "STRESS_RELATED" | "CONGESTION");
@@ -203,25 +209,35 @@ function SelectSkinGoals({step}: {step: number}) {
               }));
             }}
           >
-            <div className="absolute top-4 right-4">
-              <RadioGroupItem 
-                value={option.value} 
-                id={`acne-${option.value.toLowerCase()}`} 
-              />
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="w-12 h-12 mb-3 bg-primary/10 rounded-full flex items-center justify-center">
-                <span className="text-xl">{option.icon}</span>
+            <div className="flex-shrink-0">
+              <div className={cn(
+                "h-6 w-6 rounded-full border-2 flex items-center justify-center",
+                form.getValues("acneType") === option.value 
+                  ? "border-primary bg-primary text-white"
+                  : "border-muted-foreground group-hover:border-primary"
+              )}>
+                {form.getValues("acneType") === option.value && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="w-2 h-2 bg-current rounded-full"
+                  />
+                )}
               </div>
-              <Label 
-                htmlFor={`acne-${option.value.toLowerCase()}`} 
-                className="flex flex-col cursor-pointer space-y-1"
-              >
-                <span className="font-semibold">{option.label}</span>
-                <span className="text-sm text-muted-foreground">
-                  {option.description}
-                </span>
-              </Label>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">{option.icon}</span>
+                <Label 
+                  htmlFor={`acne-${option.value.toLowerCase()}`}
+                  className="text-lg font-semibold cursor-pointer"
+                >
+                  {option.label}
+                </Label>
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                {option.description}
+              </p>
             </div>
           </div>
         </motion.div>
@@ -229,80 +245,35 @@ function SelectSkinGoals({step}: {step: number}) {
     </RadioGroup>
   );
 
-  const skinGoalOptions = [
-    { 
-      value: "ANTI_AGING", 
-      label: "Anti-Aging", 
-      description: "Reduce fine lines and wrinkles",
-      icon: "✨",
-      illustration: (
-        <div className="w-16 h-16 mb-4 bg-primary/10 rounded-full flex items-center justify-center">
-          <span className="text-2xl">✨</span>
-        </div>
-      )
-    },
-    { 
-      value: "ACNE", 
-      label: "Acne Control", 
-      description: "Prevent and treat breakouts",
-      icon: "🔍",
-      illustration: (
-        <div className="w-16 h-16 mb-4 bg-primary/10 rounded-full flex items-center justify-center">
-          <span className="text-2xl">🔍</span>
-        </div>
-      )
-    },
-    { 
-      value: "HYDRATION", 
-      label: "Hydration Boost", 
-      description: "Improve moisture retention",
-      icon: "💧",
-      illustration: (
-        <div className="w-16 h-16 mb-4 bg-primary/10 rounded-full flex items-center justify-center">
-          <span className="text-2xl">💧</span>
-        </div>
-      )
-    },
-    { 
-      value: "BRIGHTENING", 
-      label: "Brightening", 
-      description: "Reduce dark spots and discoloration",
-      icon: "✨",
-      illustration: (
-        <div className="w-16 h-16 mb-4 bg-primary/10 rounded-full flex items-center justify-center">
-          <span className="text-2xl">✨</span>
-        </div>
-      )
-    },
-    { 
-      value: "PORE_MINIMIZATION", 
-      label: "Pore Minimization", 
-      description: "Refine and reduce visible pores",
-      icon: "⭐",
-      illustration: (
-        <div className="w-16 h-16 mb-4 bg-primary/10 rounded-full flex items-center justify-center">
-          <span className="text-2xl">⭐</span>
-        </div>
-      )
-    }
-  ]
+ 
 
   return (
     <Card className="border-none shadow-none">
       <CardHeader className="text-left md:text-center">
-        <CardTitle className="text-4xl font-bold">Your Skin Goals</CardTitle>
-        <CardDescription>
-          Select your primary skin concern to help us create your perfect skincare routine
-        </CardDescription>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <CardTitle className="text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+            Your Skin Goals
+          </CardTitle>
+          <CardDescription className="text-lg mt-4">
+            Select your primary skin concern to help us create your perfect skincare routine
+          </CardDescription>
+        </motion.div>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleNext)} className="space-y-6">
             {/* Primary Goal Section */}
-            <div 
+            <motion.div 
               ref={primaryGoalRef} 
               id="primary-goal-section"
               className="scroll-mt-20"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
             >
               <FormField
                 control={form.control}
@@ -316,59 +287,68 @@ function SelectSkinGoals({step}: {step: number}) {
                   </FormItem>
                 )}
               />
-            </div>
+            </motion.div>
 
             {/* Acne Type Section */}
-            {form.getValues("primaryGoal") === "ACNE" && (
-              <div 
-                ref={acneTypeRef} 
-                id="acne-type-section"
-                className={cn(
-                  "space-y-4 overflow-hidden transition-all duration-500 ease-in-out scroll-mt-20",
-                  form.getValues("primaryGoal") === "ACNE" 
-                    ? "max-h-[500px] opacity-100 mt-8" 
-                    : "max-h-0 opacity-0"
-                )}
-              >
-                <div className="flex items-center gap-2 text-primary bg-primary/5 p-4 rounded-lg">
-                  <AlertCircle className="h-5 w-5" />
-                  <p className="text-sm font-medium">Help us understand your acne type better</p>
-                </div>
-                <FormField
-                  control={form.control}
-                  name="acneType"
-                  render={() => (
-                    <FormItem>
-                      <FormControl>
-                        {renderAcneTypeOptions()}
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            )}
+            <AnimatePresence>
+              {form.getValues("primaryGoal") === "ACNE" && (
+                <motion.div 
+                  ref={acneTypeRef} 
+                  id="acne-type-section"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="space-y-4 scroll-mt-20 overflow-hidden"
+                >
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center gap-2 text-primary bg-primary/5 p-4 rounded-lg"
+                  >
+                    <AlertCircle className="h-5 w-5" />
+                    <p className="text-sm font-medium">Help us understand your acne type better</p>
+                  </motion.div>
+                  <FormField
+                    control={form.control}
+                    name="acneType"
+                    render={() => (
+                      <FormItem>
+                        <FormControl>
+                          {renderAcneTypeOptions()}
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            <div className="flex justify-between pt-8">
+            <motion.div 
+              className="flex justify-between pt-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
               <Button 
                 type="button" 
                 variant="outline" 
+                back
                 onClick={handleBack}
-back
               >
                 Back
               </Button>
               <Button 
                 type="submit"
+                front
                 disabled={
                   !completedSections.primaryGoal || 
                   (form.getValues("primaryGoal") === "ACNE" && !completedSections.acneType)
                 }
-                front
               >
                 Continue
               </Button>
-            </div>
+            </motion.div>
           </form>
         </Form>
       </CardContent>

@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Wallet, CreditCard, Diamond, ArrowLeft, ArrowRight, DollarSign } from 'lucide-react';
+import { Wallet, CreditCard, Diamond, DollarSign } from 'lucide-react';
 
 const budgetAllocationSchema = z.object({
   monthlyBudget: z.enum(["LOW", "MID_RANGE", "LUXURY"], {
@@ -119,6 +119,7 @@ export function BudgetAllocation({step}: {step: number}) {
                                   ? "ring-2 ring-primary shadow-lg scale-[1.02]" 
                                   : "hover:shadow-md hover:border-primary/50"}
                               `}
+                              onClick={() => field.onChange(option.value)}
                             >
                               <RadioGroupItem 
                                 value={option.value} 

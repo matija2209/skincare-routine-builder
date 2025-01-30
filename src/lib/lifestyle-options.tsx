@@ -569,6 +569,64 @@ const makeupSection = {
   }
 };
 
+const skinGoalOptions = [
+  { 
+    value: "ANTI_AGING", 
+    label: "Anti-Aging", 
+    description: "Reduce fine lines and wrinkles",
+    icon: "✨",
+    illustration: (
+      <div className="w-16 h-16 mb-4 bg-primary/10 rounded-full flex items-center justify-center">
+        <span className="text-2xl">✨</span>
+      </div>
+    )
+  },
+  { 
+    value: "ACNE", 
+    label: "Acne Control", 
+    description: "Prevent and treat breakouts",
+    icon: "🔍",
+    illustration: (
+      <div className="w-16 h-16 mb-4 bg-primary/10 rounded-full flex items-center justify-center">
+        <span className="text-2xl">🔍</span>
+      </div>
+    )
+  },
+  { 
+    value: "HYDRATION", 
+    label: "Hydration Boost", 
+    description: "Improve moisture retention",
+    icon: "💧",
+    illustration: (
+      <div className="w-16 h-16 mb-4 bg-primary/10 rounded-full flex items-center justify-center">
+        <span className="text-2xl">💧</span>
+      </div>
+    )
+  },
+  { 
+    value: "BRIGHTENING", 
+    label: "Brightening", 
+    description: "Reduce dark spots and discoloration",
+    icon: "✨",
+    illustration: (
+      <div className="w-16 h-16 mb-4 bg-primary/10 rounded-full flex items-center justify-center">
+        <span className="text-2xl">✨</span>
+      </div>
+    )
+  },
+  { 
+    value: "PORE_MINIMIZATION", 
+    label: "Pore Minimization", 
+    description: "Refine and reduce visible pores",
+    icon: "⭐",
+    illustration: (
+      <div className="w-16 h-16 mb-4 bg-primary/10 rounded-full flex items-center justify-center">
+        <span className="text-2xl">⭐</span>
+      </div>
+    )
+  }
+]
+
 
   export {
     sunExposureOptions,
@@ -589,5 +647,6 @@ const makeupSection = {
     makeupTypeOptions,
     frequencyOptions,
     wearsMakeupOptions,
-    makeupSection
+    makeupSection,
+    skinGoalOptions
   }
