@@ -1,12 +1,11 @@
 export type SkincareFormData = {
   skinType?: "OILY" | "DRY" | "COMBINATION" | "SENSITIVE"
-  skinGoals?: ("ANTI_AGING" | "ACNE" | "HYDRATION" | "EVEN_TONE")[]
+  skinGoal?: "ANTI_AGING" | "ACNE" | "HYDRATION" | "EVEN_TONE"
   acneType?: "HORMONAL" | "STRESS" | "CONGESTION"
-  sunExposureHours?: number
+  sunExposure?: "RARE" | "MODERATE" | "FREQUENT"
   climateType?: "ARID" | "HUMID" | "URBAN"
-  wearsMakeupDaily?: boolean
   exfoliationFrequency?: "NEVER" | "WEEKLY" | "DAILY"
-  exfoliationTolerance?: "LOW" | "MEDIUM" | "HIGH"
+  exfoliationType?: "PHYSICAL_SCRUBS" | "CHEMICAL_EXFOLIANTS" | "ENZYME_EXFOLIATORS"
   ageGroup?: "TWENTIES" | "THIRTIES" | "FORTIES" | "FIFTIES" | "SIXTIES_PLUS"
   blacklistedIngredients?: string[]
   texturePreference?: "LIGHTWEIGHT" | "RICH" | "NO_PREFERENCE"
@@ -14,12 +13,13 @@ export type SkincareFormData = {
   makeupTypes?: ("FOUNDATION" | "CONCEALER" | "BLUSH" | "EYESHADOW" | "EYELINER" | "MASCARA" | "LIPSTICK" | "LIP_GLOSS" | "LIP_STAIN")[]
   makeupFrequency?: 'DAILY' | 'FEW_TIMES_WEEK' | 'WEEKENDS_ONLY' | 'SPECIAL_OCCASIONS'
   ethicalPreferences?: ("NONE"|"CRUELTY_FREE" | "VEGAN" | "SUSTAINABLE_PACKAGING" | "REEF_SAFE" | "PALM_OIL_FREE")[]
-  stressLevel?: number
-  sleepHours?: number
+  stressLevels?: "LOW" | "MEDIUM" | "HIGH"
+  sleepPatterns?: "LESS_THAN_6_HRS" | "6_TO_8_HRS" | "MORE_THAN_8_HRS"
   preferredIngredients?: ("HYALURONIC_ACID" | "VITAMIN_C" | "NIACINAMIDE" | "CERAMIDES" | "PEPTIDES" | "PANTHENOL" | "CENTELLA_ASIATICA")[]
+  wearsMakeup?: boolean,
   avoidedIngredients?: ("PARABENS" | "SILICONES" | "MINERAL_OIL" | "ESSENTIAL_OILS")[]
   routineComplexity?: "LOW" | "MEDIUM" | "HIGH"
-  monthlyBudget?: number
+  monthlyBudget?: "LOW" | "MID_RANGE" | "LUXURY"
   hasPreferencesEthical?: boolean
   routineTime?: {
     morning?: number

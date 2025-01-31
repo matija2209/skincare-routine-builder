@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { useForm as useFormspree, ValidationError } from '@formspree/react';
 import { z } from "zod"
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Crown, Sparkles, Stars } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 import {
   Form,
   FormControl,
@@ -24,7 +26,8 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>
 
 function LeadForm() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { toast } = useToast();
+  const [formspreeState, handleFormspreeSubmit] = useFormspree("meoekewe"); // Replace with your form ID
 
   // Initialize form with React Hook Form
   const form = useForm<FormValues>({
@@ -36,9 +39,28 @@ function LeadForm() {
   })
 
   const onSubmit = async (data: FormValues) => {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setIsSubmitted(true);
-    console.log(data);
+    try {
+      await handleFormspreeSubmit({
+        email: data.email,
+        website: data.website,
+      });
+      
+      if (formspreeState.errors) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "There was a problem submitting your form. Please try again.",
+        });
+        return;
+      }
+      
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "There was a problem submitting your form. Please try again.",
+      });
+    }
   };
 
   // Animation variants matching splash screen
@@ -105,7 +127,7 @@ function LeadForm() {
         animate="visible"
         className="relative z-10 max-w-md w-full mx-auto p-8"
       >
-        {!isSubmitted ? (
+        {!formspreeState.succeeded ? (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <motion.div variants={itemVariants} className="text-center space-y-4">
@@ -113,10 +135,10 @@ function LeadForm() {
                   <Crown className="w-12 h-12 bg-gradient-to-r from-primary to-primary/60 bg-clip-text mb-4" />
                 </div>
                 <h1 className="text-3xl font-serif bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                  Get Your Personalized Routine
+                  Want a Custom Tool For Your Brand?
                 </h1>
                 <p className="text-base text-gray-600">
-                  Enter your details below for a custom preview
+                  Enter your website and email below for a custom preview
                 </p>
               </motion.div>
 
@@ -135,6 +157,7 @@ function LeadForm() {
                         />
                       </FormControl>
                       <FormMessage />
+                      <ValidationError prefix="Website" field="website" errors={formspreeState.errors} />
                     </FormItem>
                   )}
                 />
@@ -153,6 +176,7 @@ function LeadForm() {
                         />
                       </FormControl>
                       <FormMessage />
+                      <ValidationError prefix="Email" field="email" errors={formspreeState.errors} />
                     </FormItem>
                   )}
                 />
@@ -161,12 +185,13 @@ function LeadForm() {
               <motion.div variants={itemVariants} className="text-center">
                 <Button
                   type="submit"
-                  className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-6 text-lg rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105 w-full"
+                  disabled={formspreeState.submitting}
+                  className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-6 text-lg rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105 w-full disabled:opacity-50"
                 >
-                  Generate My Preview ✨
+                  {formspreeState.submitting ? 'Submitting...' : 'Get Your Custom Tool ✨'}
                 </Button>
                 <p className="mt-4 text-sm text-gray-500">
-                  Takes only 2 minutes
+                  Product quizz, multi-step forms, giveaways, and more!
                 </p>
               </motion.div>
             </form>
@@ -178,10 +203,10 @@ function LeadForm() {
           >
             <Crown className="w-12 h-12 mx-auto text-pink-500" />
             <h2 className="text-2xl font-serif bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Preview Generated!
+              Thank you!
             </h2>
             <p className="text-gray-600">
-              Check your email for your personalized routine demo!
+              I'll get back to you as soon as possible!
             </p>
           </motion.div>
         )}

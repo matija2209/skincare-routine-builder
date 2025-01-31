@@ -16,7 +16,7 @@ import MakeupQuestion from "./components/steps/makeup-question"
 import LifestyleFactors from "./components/steps/lifestyle-factors"
 import AgeGroup from "./components/steps/age-group"
 import FinalStep from "./components/steps/final-step"
-import EthicalPreferences from "./components/steps/ethical/ethical-preferences"
+import EthicalPreferences from "./components/steps/ethical-preferences"
 
 function App() {
   const currentStep = useFormStore((state) => state.currentStep)

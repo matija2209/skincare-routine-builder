@@ -4,7 +4,7 @@ import { z } from "zod"
 import { useFormStore } from "@/lib/store"
 
 interface UseFormStepProps<T extends FieldValues> {
-  schema: z.ZodSchema<T>
+  schema?: z.ZodSchema<T>
   currentStep: number
 }
 
@@ -15,7 +15,8 @@ export function useFormStep<T extends FieldValues>({
   const { setCurrentStep, setFormData, getLatestState } = useFormStore()
 
   const form = useForm<T>({
-    resolver: zodResolver(schema),
+    resolver: schema ? zodResolver(schema) : undefined,
+    mode: "onChange",
     defaultValues: getLatestState().formData as DefaultValues<T>,
   })
 

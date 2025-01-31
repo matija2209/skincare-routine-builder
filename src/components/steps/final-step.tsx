@@ -7,6 +7,7 @@ import { z } from "zod"
 import LeadForm from "../lead-form"
 import SkincareSummary from "../skincare-summary"
 import DeveloperProfile from "../developer-profile"
+import { SkincareSummarySheet } from "../skincare-sheet"
 
 
 function FinalStep({step}: {step: number}) {
@@ -36,9 +37,12 @@ function FinalStep({step}: {step: number}) {
           </CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="flex justify-end mb-4">
+            <SkincareSummarySheet data={formData} />
+          </div>
           <SkincareSummary data={formData}></SkincareSummary>
-<DeveloperProfile></DeveloperProfile>           
-            <LeadForm></LeadForm>
+          <DeveloperProfile></DeveloperProfile>           
+          <LeadForm></LeadForm>
 
         </CardContent>
         <CardFooter className="flex justify-between">

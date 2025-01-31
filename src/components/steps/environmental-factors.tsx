@@ -8,7 +8,7 @@ import { Cloud, Sun, Building2 } from 'lucide-react'
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 const climateTypesSchema = z.object({
-  climateTypes: z.enum(["ARID", "HUMID", "URBAN"], {
+  climateType: z.enum(["ARID", "HUMID", "URBAN"], {
     required_error: "Please select an environmental factor",
   })
 })
@@ -43,20 +43,20 @@ const environmentalOptions = [
   }
 ]
 
-type climateTypesForm = z.infer<typeof climateTypesSchema>
+
 
 function EnvironmentalFactorsStep({step}: {step: number}) {
-  const { form, handleBack, handleNext,setFormData } = useFormStep<climateTypesForm>({
+  const { form, handleBack, handleNext,setFormData } = useFormStep({
     schema: climateTypesSchema,
     currentStep: step,
   })
 
-  const climateType = form.watch("climateTypes")
+  const climateType = form.watch("climateType")
 
   useEffect(() => {
     setFormData({
       ...form.getValues(),
-      climateType: climateType
+      climateType,
     })
   }, [climateType])
 
@@ -73,7 +73,7 @@ function EnvironmentalFactorsStep({step}: {step: number}) {
           <form onSubmit={form.handleSubmit(handleNext)} className="space-y-6">
             <FormField
               control={form.control}
-              name="climateTypes"
+              name="climateType"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>

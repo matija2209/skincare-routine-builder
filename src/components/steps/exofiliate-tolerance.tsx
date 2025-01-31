@@ -96,47 +96,50 @@ const ExfoliationTolerance = ({ step }: { step: number }) => {
   );
 
   const renderTypeOptions = () => (
-    <div className="space-y-3">
-      {exfoliationTypeOptions.map((option) => (
-        <motion.div
-          key={option.value}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+    <FormField
+      control={form.control}
+      name="exfoliationType"
+      render={({ field }) => (
+        <RadioGroup
+          onValueChange={field.onChange}
+          value={field.value}
+          className="space-y-3"
         >
-          <div 
-            className={cn(
-              `relative flex items-center space-x-4 rounded-lg border p-4 cursor-pointer bg-gradient-to-r ${option.gradient}`,
-              form.getValues("exfoliationType") === option.value 
-                ? "ring-2 ring-primary shadow-lg" 
-                : "hover:shadow-md"
-            )}
-            onClick={() => {
-              form.setValue("exfoliationType", option.value as "PHYSICAL_SCRUBS" | "CHEMICAL_EXFOLIANTS" | "ENZYME_EXFOLIATORS");
-              setCompletedSections(prev => ({
-                ...prev,
-                exfoliationType: true
-              }));
-            }}
-          >
-            <RadioGroupItem value={option.value} id={`type-${option.value}`} />
-            <div className="flex items-center space-x-4 flex-1">
-              <motion.div
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.5 }}
-                className="p-2 bg-white rounded-full shadow-sm"
+          {exfoliationTypeOptions.map((option) => (
+            <motion.div
+              key={option.value}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <div 
+                className={cn(
+                  `relative flex items-center space-x-4 rounded-lg border p-4 cursor-pointer bg-gradient-to-r ${option.gradient}`,
+                  field.value === option.value 
+                    ? "ring-2 ring-primary shadow-lg" 
+                    : "hover:shadow-md"
+                )}
               >
-                <option.icon className="w-6 h-6" />
-              </motion.div>
-              <Label htmlFor={`type-${option.value}`} className="flex flex-col cursor-pointer flex-1">
-                <span className="text-lg font-semibold">{option.label}</span>
-                <span className="text-muted-foreground">{option.description}</span>
-                <p className="mt-2 text-sm text-muted-foreground italic">{option.details}</p>
-              </Label>
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </div>
+                <RadioGroupItem value={option.value} id={`type-${option.value}`} />
+                <div className="flex items-center space-x-4 flex-1">
+                  <motion.div
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.5 }}
+                    className="p-2 bg-white rounded-full shadow-sm"
+                  >
+                    <option.icon className="w-6 h-6" />
+                  </motion.div>
+                  <Label htmlFor={`type-${option.value}`} className="flex flex-col cursor-pointer flex-1">
+                    <span className="text-lg font-semibold">{option.label}</span>
+                    <span className="text-muted-foreground">{option.description}</span>
+                    <p className="mt-2 text-sm text-muted-foreground italic">{option.details}</p>
+                  </Label>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </RadioGroup>
+      )}
+    />
   );
 
 
@@ -196,23 +199,7 @@ const ExfoliationTolerance = ({ step }: { step: number }) => {
                 id="exfoliation-type-section"
                 className="scroll-mt-20"
               >
-                <FormField
-                  control={form.control}
-                  name="exfoliationType"
-                  render={({ field }) => (
-                    <FormItem className="space-y-4">
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          {renderTypeOptions()}
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {renderTypeOptions()}
               </div>
             )}
 

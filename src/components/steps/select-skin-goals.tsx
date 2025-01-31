@@ -11,15 +11,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { skinGoalOptions } from '@/lib/lifestyle-options';
 
-const skinGoalsSchema = z.discriminatedUnion("primaryGoal", [
+const skinGoalsSchema = z.discriminatedUnion("skinGoal", [
   z.object({
-    primaryGoal: z.literal("ACNE"),
+    skinGoal: z.literal("ACNE"),
     acneType: z.enum(["HORMONAL", "STRESS_RELATED", "CONGESTION"], {
       required_error: "Please select your acne type"
     })
   }),
   z.object({
-    primaryGoal: z.enum(["BRIGHTENING", "PORE_MINIMIZATION", "ANTI_AGING", "HYDRATION"]),
+    skinGoal: z.enum(["BRIGHTENING", "PORE_MINIMIZATION", "ANTI_AGING", "HYDRATION"]),
   })
 ])
 
@@ -30,7 +30,7 @@ function SelectSkinGoals({step}: {step: number}) {
   });
 
   const [completedSections, setCompletedSections] = useState({
-    primaryGoal: false,
+    skinGoal: false,
     acneType: false
   });
 
@@ -84,7 +84,7 @@ function SelectSkinGoals({step}: {step: number}) {
 
     // Auto-scroll to next section after a brief delay
     requestAnimationFrame(() => {
-      if (section === 'primaryGoal' && value === "ACNE" && acneTypeRef.current) {
+      if (section === 'skinGoal' && value === "ACNE" && acneTypeRef.current) {
         smoothScrollToSection(acneTypeRef);
       }
     });
@@ -93,12 +93,12 @@ function SelectSkinGoals({step}: {step: number}) {
   const renderPrimaryGoalOptions = () => (
     <RadioGroup
       onValueChange={(value) => {
-        handleSectionComplete('primaryGoal', value);
+        handleSectionComplete('skinGoal', value);
         if (value === "ACNE") {
           form.setValue("acneType", "HORMONAL");
         } 
       }}
-      defaultValue={form.getValues("primaryGoal")}
+      defaultValue={form.getValues("skinGoal")}
       className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
     >
       {skinGoalOptions.map((option, index) => (
@@ -113,18 +113,18 @@ function SelectSkinGoals({step}: {step: number}) {
           <div 
             className={cn(
               "relative rounded-xl border p-6 transition-all duration-300 ease-in-out cursor-pointer",
-              form.getValues("primaryGoal") === option.value 
+              form.getValues("skinGoal") === option.value 
                 ? "bg-primary/5 border-primary shadow-md ring-2 ring-primary" 
                 : "hover:bg-accent/50"
             )}
-            onClick={() => handleSectionComplete('primaryGoal', option.value)}
+            onClick={() => handleSectionComplete('skinGoal', option.value)}
           >
             <div className="absolute top-4 right-4">
               <RadioGroupItem 
                 value={option.value} 
                 id={option.value} 
                 className={cn(
-                  form.getValues("primaryGoal") === option.value 
+                  form.getValues("skinGoal") === option.value 
                     ? "bg-primary text-primary-foreground" 
                     : "bg-transparent"
                 )}
@@ -255,10 +255,10 @@ function SelectSkinGoals({step}: {step: number}) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <CardTitle className="text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+          <CardTitle >
             Your Skin Goals
           </CardTitle>
-          <CardDescription className="text-lg mt-4">
+          <CardDescription>
             Select your primary skin concern to help us create your perfect skincare routine
           </CardDescription>
         </motion.div>
@@ -277,7 +277,7 @@ function SelectSkinGoals({step}: {step: number}) {
             >
               <FormField
                 control={form.control}
-                name="primaryGoal"
+                name="skinGoal"
                 render={() => (
                   <FormItem>
                     <FormControl>
@@ -291,7 +291,7 @@ function SelectSkinGoals({step}: {step: number}) {
 
             {/* Acne Type Section */}
             <AnimatePresence>
-              {form.getValues("primaryGoal") === "ACNE" && (
+              {form.getValues("skinGoal") === "ACNE" && (
                 <motion.div 
                   ref={acneTypeRef} 
                   id="acne-type-section"
@@ -342,8 +342,8 @@ function SelectSkinGoals({step}: {step: number}) {
                 type="submit"
                 front
                 disabled={
-                  !completedSections.primaryGoal || 
-                  (form.getValues("primaryGoal") === "ACNE" && !completedSections.acneType)
+                  !completedSections.skinGoal || 
+                  (form.getValues("skinGoal") === "ACNE" && !completedSections.acneType)
                 }
               >
                 Continue

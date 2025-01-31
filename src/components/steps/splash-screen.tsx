@@ -121,12 +121,15 @@ function SplashScreen() {
           </div>
 
           <motion.div variants={itemVariants} className="text-center">
-            <Button
-              className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-6 text-lg rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105"
-              onClick={handleStart}
-            >
-              Start Your Beauty Journey →
-            </Button>
+          <Button
+            className="bg-primary text-primary-foreground px-8 py-6 text-lg rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105 hover:bg-primary/90"
+            onClick={handleStart}
+          >
+            <span className="flex items-center gap-2">
+              Start Your Beauty Journey
+              <span className="text-lg">→</span>
+            </span>
+          </Button>
             <p className="mt-4 text-sm text-gray-500">Takes only 2 minutes</p>
           </motion.div>
 

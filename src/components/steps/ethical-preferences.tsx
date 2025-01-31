@@ -26,14 +26,13 @@ const ethicalPreferencesSchema = z.discriminatedUnion("hasPreferencesEthical", [
   // When no preferences are selected
   z.object({
     hasPreferencesEthical: z.literal(false),
-    ethicalPreferences: z.undefined()
+    ethicalPreferences: z.any()
   })
 ])
 
-type EthicalPreferencesForm = z.infer<typeof ethicalPreferencesSchema>
 
 export function EthicalPreferences({step}: {step: number}) {
-  const { form, handleBack, handleNext } = useFormStep<EthicalPreferencesForm>({
+  const { form, handleBack, handleNext } = useFormStep({
     schema: ethicalPreferencesSchema,
     currentStep: step,
   })
@@ -79,10 +78,10 @@ export function EthicalPreferences({step}: {step: number}) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <CardTitle className="text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+          <CardTitle >
             Ethical Preferences
           </CardTitle>
-          <CardDescription className="text-lg mt-4 text-muted-foreground">
+          <CardDescription >
             Select your ethical priorities for skincare products
           </CardDescription>
         </motion.div>
@@ -167,7 +166,8 @@ export function EthicalPreferences({step}: {step: number}) {
               )}
             />
 
-            <AnimatePresence>
+           
+<AnimatePresence>
               {form.watch("hasPreferencesEthical") === true && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
@@ -210,7 +210,7 @@ export function EthicalPreferences({step}: {step: number}) {
                                       `}
                                       onClick={() => {
                                         isChecked
-                                          ? field.onChange(field.value?.filter(v => v !== option.value))
+                                          ? field.onChange(field.value?.filter((v:any) => v !== option.value))
                                           : field.onChange([...(field.value || []), option.value])
                                       }}
                                     >
@@ -270,13 +270,13 @@ export function EthicalPreferences({step}: {step: number}) {
                 type="button"
                 variant="outline"
                 onClick={handleBack}
-                className="px-8 py-4 rounded-xl text-lg font-semibold hover:scale-105 transition-transform"
+                back
               >
                 Back
               </Button>
               <Button
                 type="submit"
-                className="px-8 py-4 rounded-xl text-lg font-semibold bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 hover:scale-105 transition-transform"
+                front
               >
                 Continue
               </Button>

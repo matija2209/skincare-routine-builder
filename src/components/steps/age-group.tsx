@@ -110,16 +110,16 @@ export function AgeGroup({step}: {step: number}) {
 
   return (
     <Card className="border-none shadow-none">
-      <CardHeader className="text-left md:text-center">
+      <CardHeader>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <CardTitle className="text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+          <CardTitle >
             Your Age Group
           </CardTitle>
-          <CardDescription className="text-lg max-w-2xl mx-auto mt-4">
+          <CardDescription>
             Help us customize your perfect skincare routine based on your age group
           </CardDescription>
         </motion.div>
@@ -236,13 +236,12 @@ export function AgeGroup({step}: {step: number}) {
                 type="button" 
                 variant="outline" 
                 onClick={handleBack}
-                className="px-8 py-4 rounded-xl text-lg font-semibold hover:scale-105 transition-transform"
-              >
+back              >
                 Back
               </Button>
               <Button 
                 type="submit"
-                className="px-8 py-4 rounded-xl text-lg font-semibold bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 hover:scale-105 transition-transform"
+                front
               >
                 Continue
               </Button>
