@@ -191,7 +191,7 @@ const SkincareSummary = ({ data }: { data: SkincareFormData }) => {
               <span className="text-sm text-gray-500">Makeup Usage</span>
               <div className="flex items-center gap-2 mt-1">
                 <Camera className="h-4 w-4 text-purple-500" />
-                <span>{data.wearsMakeup ? data.makeupFrequency : 'No makeup'}</span>
+                <span>{data.wearsMakeup ? data.makeupFrequency === "DAILY" ? "Daily" : data.makeupFrequency === "FEW_TIMES_WEEK" ? "Few times a week" : data.makeupFrequency === "WEEKENDS_ONLY" ? "Weekends only" : "Special occasions" : 'No makeup'}</span>
               </div>
             </div>
             {data.makeupTypes && (
@@ -227,7 +227,7 @@ const SkincareSummary = ({ data }: { data: SkincareFormData }) => {
             <span className="text-sm text-gray-500">Climate Type</span>
             <div className="flex items-center gap-2 mt-1">
               <Cloud className="h-4 w-4 text-blue-500" />
-              <span className="font-medium">{data.climateType}</span>
+              <span className="font-medium">{data.climateType === "ARID" ? "Arid" : data.climateType === "HUMID" ? "Humid" : "Urban"}</span>
             </div>
           </div>
         </motion.div>

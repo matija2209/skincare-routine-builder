@@ -41,8 +41,8 @@ function FinalStep({step}: {step: number}) {
             <SkincareSummarySheet data={formData} />
           </div>
           <SkincareSummary data={formData}></SkincareSummary>
-          <DeveloperProfile></DeveloperProfile>           
           <LeadForm></LeadForm>
+          <DeveloperProfile></DeveloperProfile>           
 
         </CardContent>
         <CardFooter className="flex justify-between">

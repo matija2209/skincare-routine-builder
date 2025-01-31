@@ -16,7 +16,7 @@ export function DeveloperProfile() {
             <div className="md:w-1/2">
               <h2 className="text-2xl font-bold mb-4">Matija Žiberna</h2>
               <p className="text-gray-600 dark:text-gray-300 mb-6">
-                I'm a passionate full-stack developer and entrepreneur with over 8 years of experience 
+                I'm a passionate full-stack developer and entrepreneur with over 5 years of experience 
                 in marketing, business development, and web development. Self-taught coder and co-founder 
                 of We Hate Copy Pasting, where we solve software problems for direct-to-consumer businesses.
               </p>
