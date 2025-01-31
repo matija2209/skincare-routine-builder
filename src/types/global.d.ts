@@ -21,39 +21,5 @@ export type SkincareFormData = {
   routineComplexity?: "LOW" | "MEDIUM" | "HIGH"
   monthlyBudget?: "LOW" | "MID_RANGE" | "LUXURY"
   hasPreferencesEthical?: boolean
-  routineTime?: {
-    morning?: number
-    evening?: number
-  }
-  budgetAllocation?: {
-    cleansers?: number
-    treatments?: number
-    sunscreen?: number
-  }
   sustainabilityPriorities?: ("CRUELTY_FREE" | "RECYCLABLE" | "VEGAN")[]
-  productWarnings?: {
-    code?: string
-    message?: string
-    affectedProducts?: string[]
-  }[]
-  selfieAnalysis?: {
-    hydrationLevel?: number
-    textureAnalysis?: string
-    imageUrl?: string
-  }
-  skinConcerns?: {
-    primary?: string
-    secondary?: string
-    historyOfReactions?: boolean
-  }
-  lifestyleFactors?: {
-    stressLevel?: number
-    sleepHours?: number
-    dietaryRestrictions?: string[]
-  }
-  contactPreferences?: {
-    email?: string
-    phone?: string
-    subscribeToTips?: boolean
-  }
 }

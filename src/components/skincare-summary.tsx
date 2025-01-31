@@ -60,7 +60,7 @@ const CardWrapper = ({ children, gradient, icon, title }: CardWrapperProps) => (
     whileHover="hover"
     className="transform-gpu"
   >
-    <Card className="shadow-lg transition-all duration-300 hover:shadow-xl">
+    <Card className="shadow-lg transition-all duration-300 hover:shadow-xl p-0">
       <CardHeader className={`${gradient} relative overflow-hidden`}>
         <motion.div
           className="absolute inset-0 bg-gradient-to-r opacity-50"
@@ -245,7 +245,7 @@ const SkincareSummary = ({ data }: { data: SkincareFormData }) => {
           <div>
             <div className="flex justify-between mb-1">
               <span className="text-sm text-gray-500">Stress Level</span>
-              <span className="text-sm font-medium">{data.stressLevels}/10</span>
+              <span className="text-sm font-medium">{data.stressLevels === "LOW" ? "Low" : data.stressLevels === "MEDIUM" ? "Medium" : "High"}</span>
             </div>
             <StressLevelBar level={data.stressLevels === "LOW" ? 1 : data.stressLevels === "MEDIUM" ? 5 : 10} />
           </div>
@@ -287,82 +287,7 @@ const SkincareSummary = ({ data }: { data: SkincareFormData }) => {
         </motion.div>
       </CardWrapper>
 
-      {data.contactPreferences && (
-        <CardWrapper
-          gradient="from-indigo-50 to-purple-50"
-          icon={<Mail className="h-5 w-5 text-indigo-500" />}
-          title="Contact Information"
-        >
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 gap-4"
-            variants={cardVariants}
-          >
-            <div className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-gray-500" />
-              <span>{data.contactPreferences.email}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Phone className="h-4 w-4 text-gray-500" />
-              <span>{data.contactPreferences.phone}</span>
-            </div>
-          </motion.div>
-          <motion.div 
-            className="flex items-center gap-2"
-            variants={cardVariants}
-          >
-            <div className={`w-10 h-5 rounded-full transition-colors duration-200 ${
-              data.contactPreferences.subscribeToTips ? 'bg-green-500' : 'bg-gray-200'
-            }`}>
-              <div className={`w-4 h-4 rounded-full bg-white transform transition-transform duration-200 ${
-                data.contactPreferences.subscribeToTips ? 'translate-x-5' : 'translate-x-1'
-              }`} />
-            </div>
-            <span className="text-sm">Subscribe to skincare tips</span>
-          </motion.div>
-        </CardWrapper>
-      )}
-
-      {data.productWarnings && data.productWarnings.length > 0 && (
-        <motion.div
-          variants={cardVariants}
-          className="transform-gpu"
-        >
-          <Card className="border-red-200 shadow-lg">
-            <CardHeader className="bg-red-50">
-              <CardTitle className="flex items-center gap-2 text-red-600">
-                <motion.div
-                  animate={{
-                    scale: [1, 1.2, 1],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                  }}
-                >
-                  <AlertTriangle className="h-5 w-5" />
-                </motion.div>
-                <span className="text-lg">Important Warnings</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 pt-4">
-              {data.productWarnings.map((warning, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="p-4 bg-red-50 rounded-lg border border-red-200"
-                >
-                  <div className="flex items-start gap-2">
-                    <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5" />
-                    <p className="text-red-700">{warning.message}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </CardContent>
-          </Card>
-        </motion.div>
-      )}
+      
     </motion.div>
   );
 };

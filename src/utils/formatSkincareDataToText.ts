@@ -56,25 +56,7 @@ export const formatSkincareDataToText = (data: SkincareFormData): string => {
   
   sections.push(formatSection('BUDGET & PREFERENCES', budget));
 
-  // Contact Information
-  if (data.contactPreferences) {
-    const contact = [
-      `Email: ${data.contactPreferences.email}`,
-      `Phone: ${data.contactPreferences.phone}`,
-      `Subscribed to Tips: ${data.contactPreferences.subscribeToTips ? 'Yes' : 'No'}`,
-    ].join('\n');
-    
-    sections.push(formatSection('CONTACT INFORMATION', contact));
-  }
 
-  // Product Warnings
-  if (data.productWarnings && data.productWarnings.length > 0) {
-    const warnings = data.productWarnings
-      .map((warning, index) => `${index + 1}. ${warning.message}`)
-      .join('\n');
-    
-    sections.push(formatSection('⚠️ IMPORTANT WARNINGS', warnings));
-  }
 
   // Add timestamp
   const timestamp = `Generated on: ${new Date().toLocaleString()}`;

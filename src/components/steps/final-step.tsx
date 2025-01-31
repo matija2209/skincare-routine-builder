@@ -36,7 +36,7 @@ function FinalStep({step}: {step: number}) {
             Please review all the information you've provided. You can edit or start over.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <div className="flex justify-end mb-4">
             <SkincareSummarySheet data={formData} />
           </div>
