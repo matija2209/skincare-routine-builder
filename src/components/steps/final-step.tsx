@@ -1,7 +1,7 @@
 import { useFormStore } from "@/lib/store"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { useFormStep } from "@/lib/hooks/use-form-step"
+import { useFormStep } from "@/hooks/use-form-step"
 import { z } from "zod"
 
 import LeadForm from "../lead-form"

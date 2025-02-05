@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { z } from "zod"
-import { useFormStep } from "@/lib/hooks/use-form-step"
+import { useFormStep } from "@/hooks/use-form-step"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"

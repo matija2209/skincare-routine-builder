@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Form, FormField, FormItem, FormControl, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
-import { useFormStep } from '@/lib/hooks/use-form-step';
+import { useFormStep } from '@/hooks/use-form-step';
 import { z } from 'zod';
 import { AnimatePresence, motion } from 'framer-motion';
 import { frequencyOptions, makeupTypeOptions, wearsMakeupOptions } from '@/lib/lifestyle-options';

@@ -39,13 +39,7 @@ const cardVariants = {
   }
 };
 
-const progressVariants = {
-  hidden: { width: 0 },
-  visible: (width: number) => ({
-    width: `${width}%`,
-    transition: { duration: 0.8, ease: "easeOut" }
-  })
-};
+
 
 interface CardWrapperProps {
   children: React.ReactNode;

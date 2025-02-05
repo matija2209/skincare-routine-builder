@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { Check } from 'lucide-react';
-import { useFormStep } from '@/lib/hooks/use-form-step';
+import { useFormStep } from '@/hooks/use-form-step';
 import { z } from 'zod';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
