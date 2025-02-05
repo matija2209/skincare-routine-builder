@@ -25,42 +25,33 @@ This repository contains a robust multi-step form built with React, Zustand, and
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/multi-step-form.git
-```   
+   ```   
 2. Navigate to the project directory:
-
-```bash
-cd multi-step-form
-```
-
+   ```bash
+   cd multi-step-form
+   ```
 3. Install dependencies:
-
-```bash
-npm install
-```
-
+   ```bash
+   npm install
+   ```
 4. Start the development server:
-
-```bash
-npm run dev
-```
+   ```bash
+   npm run dev
+   ```
 ## Project Structure
-
-```bash
-src/
-├── components/
-│   ├── steps/                # Individual step components
-│   ├── layout/               # Layout components
-│   └── ui/                   # UI components (e.g., buttons, cards)
-├── hooks/                    # Custom hooks (e.g., useFormStep)
-├── lib/                      # Utility functions and store setup
-├── types/                    # TypeScript types and interfaces
-└── App.tsx                   # Main application component
-```
-
+   ```bash
+   src/
+   ├── components/
+   │   ├── steps/                # Individual step components
+   │   ├── layout/               # Layout components
+   │   └── ui/                   # UI components (e.g., buttons, cards)
+   ├── hooks/                    # Custom hooks (e.g., useFormStep)
+   ├── lib/                      # Utility functions and store setup
+   ├── types/                    # TypeScript types and interfaces
+   └── App.tsx                   # Main application component
+   ```
 ## Key Components
-
-1. Zustand Store (src/lib/store.ts)
-
+### 1. Zustand Store (src/lib/store.ts)
 The Zustand store manages the form's global state, including the current step, form data, and persistence logic.
 
 ```typescript
@@ -90,9 +81,7 @@ export const useFormStore = create<FormState>()(
   )
 );
 ```
-
-2. Custom Hook (src/hooks/use-form-step.ts)
-
+### 2. Custom Hook (src/hooks/use-form-step.ts)
 A reusable hook for managing form state and navigation between steps.
 
 ```typescript
@@ -121,7 +110,7 @@ export function useFormStep<T extends FieldValues>({ schema, currentStep }: UseF
 }
 ```
 
-3. Step Components (src/components/steps/)
+### 3. Step Components (src/components/steps/)
 Each step is a standalone component that uses the useFormStep hook. For example, the SelectSkinType step:
 
 ```typescript
@@ -172,7 +161,7 @@ function SelectSkinType({ step }: { step: number }) {
 }
 ```
 
-4. Coordinator Component (src/App.tsx)
+### 4. Coordinator Component (src/App.tsx)
 The coordinator component determines which step to render based on the current step in the Zustand store.
 
 ```typescript
@@ -199,12 +188,12 @@ function App() {
 ```
 
 ## Demo
-Check out the live demo here: Skincare Routine Builder
+Check out the live demo here: [Skincare Routine Builder](https://skincare-routine-builder.vercel.app/)
 
-For a quick overview, watch the YouTube short video demo: YouTube Short Demo
+For a quick overview, watch the YouTube short video demo: [YouTube Short Demo](https://www.youtube.com/shorts/7eZ6Pmp50m8)
 
 ## About Me
-Hi, I'm Matija Žiberna, a developer passionate about building intuitive and efficient web applications. You can find more about my work and thoughts on my personal blog: Build With Matija.
+Hi, I'm Matija Žiberna, a developer passionate about building intuitive and efficient web applications. You can find more about my work and thoughts on my personal blog: [Build With Matija](https://buildwithmatija.com/)
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
